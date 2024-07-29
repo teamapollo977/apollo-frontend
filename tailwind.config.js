@@ -30,10 +30,12 @@ module.exports = {
         primary: {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)",
+          light: "var(--primary-light)",
         },
         secondary: {
           DEFAULT: "var(--secondary)",
           foreground: "var(--secondary-foreground)",
+          light: "var(--secondary-light)",
         },
         destructive: {
           DEFAULT: "var(--destructive)",
