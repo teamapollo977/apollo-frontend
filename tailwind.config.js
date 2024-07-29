@@ -75,6 +75,10 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      transitionTimingFunction: {
+        "spring": "cubic-bezier(0.46, 1.02, 0.69, 1.32)",
+        "spring2": "cubic-bezier(0.68, -0.55, 0.27, 1.55)"
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

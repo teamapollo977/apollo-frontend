@@ -1,5 +1,6 @@
 import Navbar from "./components/navbar"
 import MagneticButton from "./components/magneticButton"
+import TargetBackgroundUi from "./components/ui/targetBackgroundUi"
 
 function Landing() {
 
