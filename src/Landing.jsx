@@ -16,6 +16,7 @@ function Landing() {
           <MagneticButton text="Get Started"/>
         </div>
       </main>
+      <TargetBackgroundUi/>
     </>
   )
 }

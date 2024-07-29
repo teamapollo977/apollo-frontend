@@ -26,16 +26,19 @@ module.exports = {
         inverted: {
           background: "var(--inverted-background)",
           foreground: "var(--inverted-foreground)",
+          light: "var(--inverted-background-light)",
         },
         primary: {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)",
           light: "var(--primary-light)",
+          transparent: "var(--primary-transparent)",
         },
         secondary: {
           DEFAULT: "var(--secondary)",
           foreground: "var(--secondary-foreground)",
           light: "var(--secondary-light)",
+          transparent: "var(--secondary-transparent)",
         },
         destructive: {
           DEFAULT: "var(--destructive)",
@@ -48,6 +51,7 @@ module.exports = {
         accent: {
           DEFAULT: "var(--accent)",
           foreground: "var(--accent-foreground)",
+          light: "var(--accent-light)",
         },
         popover: {
           DEFAULT: "var(--popover)",

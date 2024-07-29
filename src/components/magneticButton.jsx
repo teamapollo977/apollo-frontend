@@ -44,11 +44,11 @@ function MagneticButton({text}) {
       <div className="bg-primary-light w-fit h-fit rounded-xl">
           <motion.div
             style={{ x, y }}
-            className="bg-gradient-to-br from-secondary to-secondary-light w-fit h-fit rounded-xl transition-all ease-out duration-500"
+            className="bg-gradient-to-br from-secondary to-secondary-transparent w-fit h-fit rounded-xl transition-all ease-out duration-500"
           >
             <motion.button
               style={{ x, y }}
-              className="w-max bg-gradient-to-br from-secondary-light to-accent px-6 py-3 rounded-xl transition-all text-accent-foreground font-bold text-2xl ease-out duration-500 shadow-xl"
+              className="w-max bg-gradient-to-br from-secondary-transparent to-accent px-6 py-3 rounded-xl transition-all text-accent-foreground font-bold text-2xl ease-out duration-500 shadow-xl"
             >
               <motion.span
                 style={{ x: textX, y: textY }}
