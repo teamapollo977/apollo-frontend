@@ -1,12 +1,24 @@
-export default function TargetBackgroundUi() {
+import TargetCircle from "./targetCircle";
+
+const targets = [{
+  size: [900, 600, 300],
+  blur: true,
+  position: "top-0 left-0 -translate-x-1/2 -translate-y-1/2"
+}, {
+    size: [600, 400, 200],
+    blur: false,
+    position: "bottom-36 right-0 translate-x-1/2 translate-y-1/2"
+  }];
+
+export default function TargetBackgroundUi({target}) {
   return (
-    <div className="absolute -z-10 top-0 left-0 -translate-x-1/2 -translate-y-1/2 h-[1200px] w-[1200px] rounded-full bg-inverted-light grid place-content-center blur-md">
-    <div className="h-[900px] w-[900px] rounded-full bg-primary-light grid place-content-center">
-    <div className="h-[600px] w-[600px] rounded-full bg-accent-light grid place-content-center">
-    <div className="h-[300px] w-[300px] rounded-full bg-secondary-light grid place-content-center">
-    </div>
-    </div>
-    </div>
+    <div className={`absolute -z-10 ${targets[target].position} ${targets[target].blur ? "blur-md" : "blur-sm"}`}>
+      <TargetCircle shadow size={`${targets[target].size[0]}px`} color="--primary-light">
+        <TargetCircle shadow size={`${targets[target].size[1]}px`} color="--accent-light">
+          <TargetCircle shadow size={`${targets[target].size[2]}px`} color="--secondary-light">
+          </TargetCircle>
+        </TargetCircle>
+      </TargetCircle>
     </div>
   )
 }

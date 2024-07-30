@@ -16,9 +16,10 @@ function Landing() {
           <MagneticButton text="Get Started"/>
         </div>
       </main>
-      <TargetBackgroundUi/>
+      <TargetBackgroundUi target={0} />
+      <TargetBackgroundUi target={1} />
     </>
   )
 }
 
-export default Landing
+export default Landing;

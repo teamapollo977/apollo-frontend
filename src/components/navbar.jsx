@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 
-function Navbar() {
+function Navbar({navigation}) {
   const [isLogged, setIsLogged] = useState(false);
 
   return (
     <nav className='fixed w-screen min-h-10 flex justify-between items-center px-5 py-2 gap-5'>
       <div className='flex justify-between items-center gap-5'>
         <a className='font-bold text-xl bg-gradient-to-br from-secondary to-accent bg-clip-text text-transparent' href='#'>Apollo</a>
-        {isLogged && <>
+        {isLogged || navigation && <>
           <a href='#'>Home</a>
           <a href='#'>About</a>
           <a href='#'>Contact</a>
@@ -19,4 +19,4 @@ function Navbar() {
   )
 }
 
-export default Navbar
+export default Navbar;
