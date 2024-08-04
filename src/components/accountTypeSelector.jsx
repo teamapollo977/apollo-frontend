@@ -1,9 +1,16 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 
-function AccountTypeSelector({text, mirrored}) {
+function AccountTypeSelector({text, individual, setAccountType}) {
 
   return (
-    <button className='grow hover:underline'>{text}</button>
+    <Link
+      to={`/signup/${individual ? 'individual' : 'organization'}`}
+      className={`grow hover:underline ${individual ? 'individual' : 'organization'}`}
+      onMouseEnter={() => setAccountType(individual ? 'archer' : 'archery club')}
+    >
+      {text}
+    </Link>
   )
 }
 

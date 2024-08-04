@@ -6,7 +6,6 @@ function Landing() {
 
   return (
     <>
-      <Navbar/>
       <main className="grid w-screen h-screen place-content-center">
         <div className="flex flex-col items-center">
           <div className="flex flex-col gap-10 items-center text-center w-min">
@@ -16,8 +15,6 @@ function Landing() {
           <MagneticButton text="Get Started"/>
         </div>
       </main>
-      <TargetBackgroundUi target={0} />
-      <TargetBackgroundUi target={1} />
     </>
   )
 }

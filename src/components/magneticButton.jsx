@@ -1,9 +1,12 @@
+import { useNavigate } from 'react-router-dom'
+
 import { AnimatePresence } from "framer-motion"
 import { useTransform } from "framer-motion"
 import { useMotionValue } from "framer-motion"
 import { motion } from "framer-motion"
 
 function MagneticButton({text}) {
+  const navigate = useNavigate();
 
   const mapRange = (
   inputLower,
@@ -49,6 +52,7 @@ function MagneticButton({text}) {
             <motion.button
               style={{ x, y }}
               className="w-max bg-gradient-to-br from-secondary-transparent to-accent px-6 py-3 rounded-xl transition-all text-accent-foreground font-bold text-2xl ease-out duration-500 shadow-xl"
+              onClick={() => navigate("/signup")}
             >
               <motion.span
                 style={{ x: textX, y: textY }}

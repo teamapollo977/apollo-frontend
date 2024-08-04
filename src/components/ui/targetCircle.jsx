@@ -5,7 +5,7 @@ export default function TargetCircle({size, color, shadow, children}) {
         height: size,
         backgroundColor: `var(${color})`
       }}
-      className={`aspect-square rounded-full grid place-content-center ${shadow && "shadow-2xl"}`}
+      className={`aspect-square rounded-full grid place-content-center shadow-2xl`}
     >
       {children}
     </div>
