@@ -12,7 +12,7 @@ const targets = [{
 
 export default function TargetBackgroundUi({target}) {
   return (
-    <div className={`absolute -z-10 ${targets[target].position} ${targets[target].blur ? "blur-md" : "blur-sm"}`}>
+    <div className={`fixed -z-10 ${targets[target].position} ${targets[target].blur ? "blur-md" : "blur-sm"}`}>
       <TargetCircle shadow size={`${targets[target].size[0]}px`} color="--primary-light">
         <TargetCircle shadow size={`${targets[target].size[1]}px`} color="--accent-light">
           <TargetCircle shadow size={`${targets[target].size[2]}px`} color="--secondary-light">
