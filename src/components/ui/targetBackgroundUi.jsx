@@ -3,12 +3,10 @@ import TargetCircle from "./targetCircle";
 const targets = [{
   key: 0,
   size: [900, 600, 300],
-  blur: true,
   position: "top-0 left-0 -translate-x-1/2 -translate-y-1/2"
 }, {
     key: 1,
     size: [600, 400, 200],
-    blur: false,
     position: "bottom-36 right-0 translate-x-1/2 translate-y-1/2"
   }];
 

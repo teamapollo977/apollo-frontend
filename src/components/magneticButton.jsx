@@ -36,10 +36,6 @@ function MagneticButton({text}) {
   const textX = useTransform(x, (latest) => latest * 0.5);
   const textY = useTransform(y, (latest) => latest * 0.5);
 
-  useEffect(() => {
-    console.log(hovered);
-  }, [hovered]);
-
   return (
     <div
       className="relative px-28 py-20 rounded-[25%] mt-[-30px]"
