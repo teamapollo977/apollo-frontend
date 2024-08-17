@@ -16,14 +16,13 @@ export default function TargetBackgroundUi() {
   return targets.map(target => (
     <div
       key={target.key}
-      className={`fixed -z-10 ${target.position} ${target.blur ? "blur-md" : "blur-sm"}`}
+      className={`fixed -z-10 ${target.position}`}
     >
-      <TargetCircle shadow size={`${target.size[0]}px`} color="--primary-light">
-        <TargetCircle shadow size={`${target.size[1]}px`} color="--accent-light">
-          <TargetCircle shadow size={`${target.size[2]}px`} color="--secondary-light">
-          </TargetCircle>
-        </TargetCircle>
-      </TargetCircle>
+      <div className="relative">
+        <TargetCircle shadow size={`${target.size[0]}px`} color="--primary-light"/>
+        <TargetCircle shadow size={`${target.size[1]}px`} color="--accent-light"/>
+        <TargetCircle shadow size={`${target.size[2]}px`} color="--secondary-light"/>
+      </div>
     </div>
   ))
 }

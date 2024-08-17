@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 
-import { AnimatePresence } from "framer-motion"
 import { useTransform } from "framer-motion"
 import { useMotionValue } from "framer-motion"
 import { motion } from "framer-motion"
@@ -20,7 +19,7 @@ function MagneticButton({text}) {
     return (value) => outputLower + (((value - inputLower) / INPUT_RANGE) * OUTPUT_RANGE || 0)
   }
 
-  const setTransform = (event, x, y, multiplier) => {
+  const setTransform = (event, x, y) => {
     const bounds = event.currentTarget.getBoundingClientRect();
     const relativeX = event.clientX - bounds.left;
     const relativeY = event.clientY - bounds.top;
