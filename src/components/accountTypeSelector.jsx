@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom';
 
-function AccountTypeSelector({text, individual, setAccountType}) {
+function AccountTypeSelector({text, club, setClubAccount}) {
 
   return (
     <Link
-      to={`/signup/${individual ? 'individual' : 'organization'}`}
-      className={`grow hover:underline ${individual ? 'individual' : 'organization'}`}
-      onMouseEnter={() => setAccountType(individual ? 'archer' : 'archery club')}
+      to={`/signup/${club ? 'organization' : 'individual'}`}
+      className={`grow hover:underline ${club ? 'organization' : 'individual'} hover:scale-110 transition-transform ease-out duration-500`}
+      onMouseEnter={() => setClubAccount(!club)}
     >
       {text}
     </Link>
