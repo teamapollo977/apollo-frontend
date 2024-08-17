@@ -8,6 +8,7 @@ function AccountTypeSelector({text, club, setClubAccount}) {
       to={`/signup/${club ? 'organization' : 'individual'}`}
       className={`grow hover:underline ${club ? 'organization' : 'individual'} hover:scale-110 transition-transform ease-out duration-500`}
       onMouseEnter={() => setClubAccount(!club)}
+      onFocus={() => setClubAccount(!club)}
     >
       {text}
     </Link>

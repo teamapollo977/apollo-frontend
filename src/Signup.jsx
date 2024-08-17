@@ -8,7 +8,7 @@ function Signup() {
   return (
     <>
       <main className="grid w-screen h-screen place-content-center">
-        <div className="flex flex-col gap-10 items-center text-center w-fit">
+        <div className="flex flex-col gap-12 items-center text-center w-fit">
           <AccountType club={clubAccount}/>
           <div className="w-fit flex justify-center gap-10 items-center text-center">
             <AccountTypeSelector text="Sign up as an individual" setClubAccount={setClubAccount} club/>
