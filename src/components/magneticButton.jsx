@@ -1,10 +1,12 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
 import { useTransform } from "framer-motion"
 import { useMotionValue } from "framer-motion"
 import { motion } from "framer-motion"
+import { useEffect } from 'react'
 
 function MagneticButton({text}) {
+  const [hovered, setHovered] = useState(false);
   const navigate = useNavigate();
 
   const mapRange = (
@@ -34,33 +36,41 @@ function MagneticButton({text}) {
   const textX = useTransform(x, (latest) => latest * 0.5);
   const textY = useTransform(y, (latest) => latest * 0.5);
 
+  useEffect(() => {
+    console.log(hovered);
+  }, [hovered]);
+
   return (
     <div
       className="relative px-28 py-20 rounded-[25%] mt-[-30px]"
-      onPointerMove={(event) => setTransform(event, x, y)}
-      onPointerLeave={() => {
-        x.set(0);
-        y.set(0);
-      }}
     >
       <div className="bg-primary-light w-fit h-fit rounded-xl">
-          <motion.div
+        <motion.div
+          style={{ x, y }}
+          className="bg-gradient-to-br from-secondary to-secondary-transparent w-fit h-fit rounded-xl transition-all ease-out duration-500 hover:duration-200"
+          onPointerMove={(event) => hovered && setTransform(event, x, y)}
+          onPointerLeave={() => {
+            if (hovered) {
+              x.set(0);
+              y.set(0);
+              setHovered(false);
+            }
+          }}
+        >
+          <motion.button
             style={{ x, y }}
-            className="bg-gradient-to-br from-secondary to-secondary-transparent w-fit h-fit rounded-xl transition-all ease-out duration-500"
+            className="w-max bg-gradient-to-br from-secondary-transparent to-accent px-6 py-3 rounded-xl transition-all text-accent-foreground font-bold text-2xl ease-out duration-500 hover:duration-200 shadow-xl"
+            onClick={() => navigate("/signup")}
           >
-            <motion.button
-              style={{ x, y }}
-              className="w-max bg-gradient-to-br from-secondary-transparent to-accent px-6 py-3 rounded-xl transition-all text-accent-foreground font-bold text-2xl ease-out duration-500 shadow-xl"
-              onClick={() => navigate("/signup")}
+            <motion.span
+              style={{ x: textX, y: textY }}
+              className="relative transition-all text-accent-foreground font-bold text-2xl ease-out duration-500 hover:duration-200 translate-x-8"
+              onPointerLeave={() => setHovered(true)}
             >
-              <motion.span
-                style={{ x: textX, y: textY }}
-                className="relative transition-all text-accent-foreground font-bold text-2xl ease-out duration-500 translate-x-8"
-              >
-                {text}
-              </motion.span>
-            </motion.button>
-          </motion.div>
+              {text}
+            </motion.span>
+          </motion.button>
+        </motion.div>
       </div>
     </div>
   )
