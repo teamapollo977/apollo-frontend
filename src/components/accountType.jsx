@@ -5,8 +5,8 @@ function AccountType({club}) {
 
   return (
     <h1 className="inline-block text-5xl font-semibold text-center align-top leading-normal">
-    <span className="opacity-80">
-      {"I am an "}
+      <span className="opacity-80">
+        {"I am an "}
       </span>
       <span className="text-nowrap nowrap text-accent no-underline bg-gradient-to-r to-accent via-secondary from-transparent bg-[length:100%_2px] bg-no-repeat bg-left-bottom">
         {"archer"}

@@ -1,3 +1,7 @@
+const {
+  default: flattenColorPalette,
+} = require("tailwindcss/lib/util/flattenColorPalette");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -27,6 +31,7 @@ module.exports = {
           background: "var(--inverted-background)",
           foreground: "var(--inverted-foreground)",
           light: "var(--inverted-background-light)",
+          medium: "var(--inverted-background-medium)",
         },
         primary: {
           DEFAULT: "var(--primary)",
@@ -84,8 +89,22 @@ module.exports = {
       transitionTimingFunction: {
         "spring": "cubic-bezier(0.46, 1.02, 0.69, 1.32)",
         "spring2": "cubic-bezier(0.68, -0.55, 0.27, 1.55)"
-      }
+      },
+      boxShadow: {
+        input: `0px 2px 3px -1px rgba(0,0,0,0.1), 0px 1px 0px 0px rgba(25,28,33,0.02), 0px 0px 0px 1px rgba(25,28,33,0.08)`,
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), addVariablesForColors],
+};
+
+function addVariablesForColors({ addBase, theme }) {
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ":root": newVars,
+  });
 }

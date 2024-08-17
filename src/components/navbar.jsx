@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import TargetBackgroundUi from './ui/targetBackgroundUi';
+import { useNavigate } from 'react-router-dom';
 
 function Navbar({navigation}) {
   const [isLogged, setIsLogged] = useState(false);
+  // navigate
+  const navigate = useNavigate();
 
   return (
     <>
@@ -18,7 +21,12 @@ function Navbar({navigation}) {
             <Link to='#'>Services</Link>
           </>}
         </div>
-        <button className='bg-inverted-background font-medium text-inverted-foreground px-4 py-1 rounded-lg'>Sign In</button>
+        <button
+          onClick={() => navigate('/signin')}
+          className='bg-gradient-to-br from-inverted-background to-inverted-medium font-medium text-inverted-foreground px-4 py-1 rounded-lg'
+        >
+          Sign In
+        </button>
       </nav>
       <Outlet />
     </>

@@ -1,34 +1,73 @@
-import { Input } from "@/components/ui/input";
+import React from "react";
+import { Label, LabelInputContainer } from "@/components/ui/label";
+import { Input } from "@/components/ui/input/input";
+import { BottomGradient } from "./components/ui/input/buttonBottomGradient";
 
-function RegisterOrganization() {
-
+export default function RegisterIndividual() {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted");
+  };
   return (
-    <>
-      <main className="grid w-screen h-screen place-content-center gap-5">
-        <div className="flex flex-col gap-10 items-center w-fit">
-          <div className="grid grid-cols-4 items-center gap-x-4 gap-y-2">
-            <span>Name</span>
-            <Input type="text" className="col-span-3"/>
-            <span>Address</span>
-            <Input type="text" className="col-span-3"/>
-            <span>Registration</span>
-            <Input type="text" className="col-span-3"/>
-            <span>Supervisor</span>
-            <Input type="text" className="col-span-3"/>
-            <span>Phone Number</span>
-            <Input type="tel" className="col-span-3"/>
-            <span>Email</span>
-            <Input type="email" className="col-span-3"/>
-            <span>Password</span>
-            <Input type="password" className="col-span-3"/>
-            <span>Confirm Password</span>
-            <Input type="password" className="col-span-3"/>
-          </div>
-          <button className="w-1/4 bg-inverted-background text-inverted-foreground text-xl px-4 py-2 rounded-lg">Register</button>
-        </div>
-      </main>
-    </>
-  )
-}
+    <main className="grid w-screen h-screen place-content-center gap-5">
+      <div className="max-w-screen-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input backdrop-blur-xl">
+        <h2 className="font-bold text-xl text-transparent bg-clip-text bg-gradient-to-br from-inverted-background to-inverted-medium">
+          Sign up as an archery club
+        </h2>
+        <p className="text-inverted-medium text-sm max-w-sm mt-2">
+          Need a personal account? <a href="/signup/individual" className="underline text-foreground hover:text-accent transition duration-300">Sign up as an individual</a>
+        </p>
+        <p className="text-inverted-medium text-sm max-w-sm mt-2">
+          Already have an account? <a href="/signin" className="underline text-foreground hover:text-accent transition duration-300">Sign in</a>
+        </p>
 
-export default RegisterOrganization;
+        <form className="my-8 flex flex-col gap-4" onSubmit={handleSubmit}>
+          <LabelInputContainer>
+            <Label htmlFor="name">Name</Label>
+            <Input id="name" placeholder="Deep South Archery Club" type="text" />
+          </LabelInputContainer>
+          <LabelInputContainer>
+            <Label htmlFor="address">Address</Label>
+            <Input id="address" placeholder="123 Tay St" type="text" />
+          </LabelInputContainer>
+          <LabelInputContainer>
+            <Label htmlFor="registration">Registration</Label>
+            <Input id="registration" placeholder="123456789" />
+          </LabelInputContainer>
+          <LabelInputContainer>
+            <Label htmlFor="address">Supervisor</Label>
+            <Input id="address" placeholder="John Johnson" type="text" />
+          </LabelInputContainer>
+          <LabelInputContainer>
+            <Label htmlFor="phone">Phone Number</Label>
+            <Input id="phone" placeholder="12 345 6789" type="tel" />
+          </LabelInputContainer>
+          <LabelInputContainer>
+            <Label htmlFor="email">Email Address</Label>
+            <Input id="email" placeholder="manager@archeryclub.com" type="email" />
+          </LabelInputContainer>
+          <LabelInputContainer>
+            <Label htmlFor="password">Password</Label>
+            <Input id="password" placeholder="••••••••" type="password" />
+          </LabelInputContainer>
+          <LabelInputContainer>
+            <Label htmlFor="confirmpassword">Confirm password</Label>
+            <Input
+              id="confirmpassword"
+              placeholder="••••••••"
+              type="password"
+            />
+          </LabelInputContainer>
+
+          <button
+            className="bg-gradient-to-br hover:bg-right relative group/btn from-inverted-background to-inverted-medium block w-full transition-all duration:1000 ease-in-out text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]"
+            type="submit"
+          >
+            Sign up &rarr;
+            <BottomGradient />
+          </button>
+        </form>
+      </div>
+    </main>
+  );
+}

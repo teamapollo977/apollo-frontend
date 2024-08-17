@@ -16,7 +16,6 @@ function AccountTypeSelector({text, club, setClubAccount, setSelecting, selectin
         setSelecting(false);
       }}
       onFocus={() => setClubAccount(!club)}
-      onFocusOut={() => setSelecting(false)}
     >
       {text}
     </Link>
