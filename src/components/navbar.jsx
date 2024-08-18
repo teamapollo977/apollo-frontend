@@ -5,16 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import DefaultButton from './defaultButton';
 
 function Navbar({navigation}) {
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(true);
   const navigate = useNavigate();
 
   return (
     <>
       <TargetBackgroundUi />
-      <nav className='fixed w-screen min-h-10 flex justify-between items-center px-5 py-2 gap-5'>
+      <nav className='fixed z-50 w-screen min-h-10 flex justify-between items-center px-5 py-2 gap-5'>
+        <Link className='font-bold text-xl bg-gradient-to-br from-secondary to-accent bg-clip-text text-transparent' to='/'>Apollo</Link>
         <div className='flex justify-between items-center gap-5'>
-          <Link className='font-bold text-xl bg-gradient-to-br from-secondary to-accent bg-clip-text text-transparent' to='/'>Apollo</Link>
-          {isLogged || navigation && <>
+          {isLogged && <>
             <Link to='/home'>Home</Link>
             <Link to='#'>About</Link>
             <Link to='#'>Contact</Link>

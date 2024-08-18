@@ -14,7 +14,7 @@ export default function Signin() {
     <DefaultForm
       handleSubmit={handleSubmit}
       title="Sign in"
-      submitText="Sign in &rarr;"
+      submitText="Sign in"
       redirects={[
         {
           text: "Don't have an account yet?",

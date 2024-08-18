@@ -11,6 +11,7 @@ import RegisterIndividual from './RegisterIndividual.jsx'
 import RegisterOrganization from './RegisterOrganization.jsx'
 import Navbar from './components/navbar.jsx';
 import Signin from './Signin.jsx';
+import Competition from './Competition.jsx';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
         path: "/signup/organization",
         element: <RegisterOrganization />,
       },
+      {
+        path: "/competition",
+        element: <Competition />,
+      }
     ],
   },
 ])
