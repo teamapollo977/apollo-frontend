@@ -30,7 +30,8 @@ module.exports = {
         inverted: {
           background: "var(--inverted-background)",
           foreground: "var(--inverted-foreground)",
-          light: "var(--inverted-background-light)",
+          lighter: "var(--inverted-background-lighter)",
+          transparent: "var(--inverted-background-transparent)",
           medium: "var(--inverted-background-medium)",
         },
         primary: {

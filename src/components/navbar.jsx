@@ -3,6 +3,7 @@ import { Link, Outlet } from 'react-router-dom'
 import TargetBackgroundUi from './ui/targetBackgroundUi';
 import { useNavigate } from 'react-router-dom';
 import DefaultButton from './defaultButton';
+import { NavbarMenu } from './navbarMenu';
 
 function Navbar({navigation}) {
   const [isLogged, setIsLogged] = useState(true);
@@ -15,10 +16,7 @@ function Navbar({navigation}) {
         <Link className='font-bold text-xl bg-gradient-to-br from-secondary to-accent bg-clip-text text-transparent' to='/'>Apollo</Link>
         <div className='flex justify-between items-center gap-5'>
           {isLogged && <>
-            <Link to='/home'>Home</Link>
-            <Link to='#'>About</Link>
-            <Link to='#'>Contact</Link>
-            <Link to='#'>Services</Link>
+            <NavbarMenu/>
           </>}
         </div>
         <DefaultButton
