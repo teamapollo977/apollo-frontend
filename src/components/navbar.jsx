@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 function Navbar({navigation}) {
   const [isLogged, setIsLogged] = useState(false);
-  // navigate
   const navigate = useNavigate();
 
   return (
@@ -28,7 +27,9 @@ function Navbar({navigation}) {
           Sign In
         </button>
       </nav>
-      <Outlet />
+      <main className="grid w-screen min-h-screen place-content-center py-16">
+        <Outlet />
+      </main>
     </>
   )
 }
