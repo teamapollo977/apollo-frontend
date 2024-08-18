@@ -1,7 +1,7 @@
 import React from "react";
 import { Label, LabelInputContainer } from "@/components/ui/label";
 import { Input } from "@/components/ui/input/input";
-import { BottomGradient } from "./components/ui/input/buttonBottomGradient";
+import DefaultButton from "./components/defaultButton";
 
 export default function RegisterIndividual() {
   const handleSubmit = (e) => {
@@ -10,7 +10,7 @@ export default function RegisterIndividual() {
   };
   return (
     <main className="grid w-screen h-screen place-content-center gap-5">
-      <div className="max-w-screen-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input backdrop-blur-xl">
+      <div className="w-full rounded-none rounded-2xl p-4 md:p-8 shadow-input backdrop-blur-xl">
         <h2 className="font-bold text-xl text-transparent bg-clip-text bg-gradient-to-br from-inverted-background to-inverted-medium">
           Sign up as an archery club
         </h2>
@@ -59,13 +59,9 @@ export default function RegisterIndividual() {
             />
           </LabelInputContainer>
 
-          <button
-            className="bg-gradient-to-br hover:bg-right relative group/btn from-inverted-background to-inverted-medium block w-full transition-all duration:1000 ease-in-out text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]"
-            type="submit"
-          >
+          <DefaultButton>
             Sign up &rarr;
-            <BottomGradient />
-          </button>
+          </DefaultButton>
         </form>
       </div>
     </main>
