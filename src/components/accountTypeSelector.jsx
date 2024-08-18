@@ -8,14 +8,14 @@ function AccountTypeSelector({text, club, setClubAccount, setSelecting, selectin
       to={`/signup/${club ? 'organization' : 'individual'}`}
       className={`grow hover:underline ${club ? 'organization' : 'individual'} hover:scale-110 transition ease-in-out duration-500 drop-shadow-md ${selecting && '[&:not(:hover)]:opacity-70 [&:not(:hover)]:scale-90 [&:not(:hover)]:blur-[1px]'}`}
       onPointerEnter={() => {
-        setClubAccount(!club);
+        setClubAccount(club);
         setSelecting(true);
       }}
       onPointerLeave={() => {
-        setClubAccount(!club);
+        setClubAccount(club);
         setSelecting(false);
       }}
-      onFocus={() => setClubAccount(!club)}
+      onFocus={() => setClubAccount(club)}
     >
       {text}
     </Link>

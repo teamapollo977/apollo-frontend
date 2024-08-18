@@ -15,13 +15,13 @@ function Signup() {
           setClubAccount={setClubAccount}
           selecting={selectingAccountType}
           setSelecting={setSelectingAccountType}
-          club
         />
         <AccountTypeSelector 
           text="Sign up as an organization" 
           setClubAccount={setClubAccount} 
           selecting={selectingAccountType} 
           setSelecting={setSelectingAccountType} 
+          club
         />
       </div>
     </div>
