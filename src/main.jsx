@@ -10,6 +10,7 @@ import './index.css'
 import RegisterIndividual from './RegisterIndividual.jsx'
 import RegisterOrganization from './RegisterOrganization.jsx'
 import Navbar from './components/navbar.jsx';
+import Signin from './Signin.jsx';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Landing />,
+      },
+      {
+        path: "/signin",
+        element: <Signin />,
       },
       {
         path: "/signup",

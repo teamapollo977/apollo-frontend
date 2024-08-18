@@ -47,7 +47,7 @@ export default function RegisterIndividual() {
         <Input id="phone" placeholder="12 345 6789" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
       </LabelInputContainer>
       <LabelInputContainer>
-        <Label htmlFor="email">Email Address</Label>
+        <Label htmlFor="email">Email</Label>
         <Input id="email" placeholder="archer@archery.com" type="email" />
       </LabelInputContainer>
       <LabelInputContainer>
