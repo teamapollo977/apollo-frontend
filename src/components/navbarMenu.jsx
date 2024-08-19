@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import {
   NavigationMenu,
   NavigationMenuContent,
+  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
@@ -12,7 +13,31 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 
-const profiles = [
+const shooting = [
+  {
+    title: "Score",
+    href: "/scoring",
+    description: "Practice shooting and mark your scores.",
+  },
+  {
+    title: "Competition",
+    href: "/competition",
+    description:
+      "Participate in archery competitions organized by your club.",
+  },
+  {
+    title: "History",
+    href: "/history",
+    description: "Check your history of scores.",
+  },
+  {
+    title: "Schedule",
+    href: "/schedule",
+    description: "Schedule and check your archery sessions.",
+  },
+]
+
+const profile = [
   {
     title: "My Club",
     href: "club",
@@ -42,30 +67,26 @@ export function NavbarMenu() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
-
         <NavigationMenuItem>
-          <Link to="/competition">
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+            <Link to="/">
               Dashboard
-            </NavigationMenuLink>
-          </Link>
+            </Link>
+          </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger>Shooting</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <ListItem to="/scoring" title="Score">
-                Practice shooting and mark your scores.
-              </ListItem>
-              <ListItem to="/competition" title="Competition">
-                Participate in an archery competition organized by your archery club.
-              </ListItem>
-              <ListItem to="/history" title="History">
-                Check your history of scores.
-              </ListItem>
-              <ListItem to="/schedule" title="Schedule">
-                Schedule and check your archery sessions.
-              </ListItem>
+            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+              {shooting.map((item) => (
+                <ListItem
+                  key={item.title}
+                  title={item.title}
+                  to={item.href}
+                >
+                  {item.description}
+                </ListItem>
+              ))}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
@@ -73,24 +94,24 @@ export function NavbarMenu() {
           <NavigationMenuTrigger>Profile</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {profiles.map((profile) => (
+              {profile.map((item) => (
                 <ListItem
-                  key={profile.title}
-                  title={profile.title}
-                  to={profile.href}
+                  key={item.title}
+                  title={item.title}
+                  to={item.href}
                 >
-                  {profile.description}
+                  {item.description}
                 </ListItem>
               ))}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link to="/about">
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+            <Link to="/about">
               About Us
-            </NavigationMenuLink>
-          </Link>
+            </Link>
+          </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
