@@ -40,7 +40,7 @@ const shooting = [
 const profile = [
   {
     title: "My Club",
-    href: "club",
+    href: "my-club",
     description:
       "Manage your archery club affiliation. Check information about your club and events.",
   },

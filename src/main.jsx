@@ -39,9 +39,49 @@ const router = createBrowserRouter([
         element: <RegisterOrganization />,
       },
       {
-        path: "/competition",
+        path: "/create-competition",
         element: <Competition />,
-      }
+      },
+      {
+        path: "/dashboard",
+        element: <h1>Dashboard</h1>,
+      },
+      {
+        path: "/scoring",
+        element: <h1>Scoring</h1>,
+      },
+      {
+        path: "/competition",
+        element: <h1>Competition</h1>,
+      },
+      {
+        path: "/history",
+        element: <h1>History</h1>,
+      },
+      {
+        path: "/schedule",
+        element: <h1>Schedule</h1>,
+      },
+      {
+        path: "/my-club",
+        element: <h1>My Club</h1>,
+      },
+      {
+        path: "/analytics",
+        element: <h1>Analytics</h1>,
+      },
+      {
+        path: "/profile",
+        element: <h1>Profile</h1>,
+      },
+      {
+        path: "/settings",
+        element: <h1>Settings</h1>,
+      },
+      {
+        path: "/about",
+        element: <h1>About Us</h1>,
+      },
     ],
   },
 ])
