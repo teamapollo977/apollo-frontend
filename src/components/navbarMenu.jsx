@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils"
 import {
   NavigationMenu,
   NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
@@ -21,7 +20,7 @@ const shooting = [
   },
   {
     title: "Competition",
-    href: "/competition",
+    href: "/create-competition",
     description:
       "Participate in archery competitions organized by your club.",
   },
@@ -69,7 +68,7 @@ export function NavbarMenu() {
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link to="/">
+            <Link to="/dashboard">
               Dashboard
             </Link>
           </NavigationMenuLink>

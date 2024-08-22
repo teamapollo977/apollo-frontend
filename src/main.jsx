@@ -12,6 +12,7 @@ import RegisterOrganization from './RegisterOrganization.jsx'
 import Navbar from './components/navbar.jsx';
 import Signin from './Signin.jsx';
 import Competition from './Competition.jsx';
+import Dashboard from './Dashboard.jsx';
 
 const router = createBrowserRouter([
   {
@@ -44,7 +45,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <h1>Dashboard</h1>,
+        element: <Dashboard />,
       },
       {
         path: "/scoring",
