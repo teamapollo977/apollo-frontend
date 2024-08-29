@@ -13,6 +13,7 @@ import Navbar from './components/navbar.jsx';
 import Signin from './Signin.jsx';
 import Competition from './Competition.jsx';
 import Dashboard from './Dashboard.jsx';
+import History from './History.jsx';
 
 const router = createBrowserRouter([
   {
@@ -57,7 +58,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/history",
-        element: <h1>History</h1>,
+        element: <History />,
       },
       {
         path: "/schedule",
