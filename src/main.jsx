@@ -14,6 +14,7 @@ import Signin from './Signin.jsx';
 import Competition from './Competition.jsx';
 import Dashboard from './Dashboard.jsx';
 import History from './History.jsx';
+import Schedule from './Schedule.jsx';
 
 const router = createBrowserRouter([
   {
@@ -62,7 +63,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/schedule",
-        element: <h1>Schedule</h1>,
+        element: <Schedule />,
       },
       {
         path: "/my-club",
