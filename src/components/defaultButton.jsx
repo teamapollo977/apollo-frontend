@@ -1,8 +1,9 @@
-export default function DefaultButton({children, onClick, classes}) {
+export default function DefaultButton({children, disabled, onClick, classes}) {
   return (
     <div className="rounded-md bg-primary-light">
       <button
         onClick={onClick}
+        disabled={disabled}
         className={`bg-gradient-to-br relative group/btn from-inverted-background to-inverted-medium block w-full transition-all duration:1000 ease-in-out text-white rounded-md font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] hover:-translate-y-1 hover:translate-x-1 hover:shadow-xl hover:contrast-125 ${classes}`}
         type="submit"
       >

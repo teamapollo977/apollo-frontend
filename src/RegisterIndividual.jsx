@@ -38,14 +38,26 @@ export default function RegisterIndividual() {
           <Input id="lastname" placeholder="Johnson" type="text" />
         </LabelInputContainer>
       </div>
+      <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+      <LabelInputContainer>
+        <Label htmlFor="gender">Gender</Label>
+        <Input id="gender" placeholder="Male" type="text" />
+      </LabelInputContainer>
       <LabelInputContainer>
         <Label htmlFor="dob">Date of Birth</Label>
         <Input id="dob" placeholder="projectmayhem@fc.com" type="date" />
       </LabelInputContainer>
+      </div>
+      <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
       <LabelInputContainer>
         <Label htmlFor="phone">Phone Number</Label>
         <Input id="phone" placeholder="12 345 6789" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
       </LabelInputContainer>
+      <LabelInputContainer>
+        <Label htmlFor="emergency">Emergency Contact</Label>
+        <Input id="emergency" placeholder="12 345 6789" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
+      </LabelInputContainer>
+      </div>
       <LabelInputContainer>
         <Label htmlFor="email">Email</Label>
         <Input id="email" placeholder="archer@archery.com" type="email" />
