@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Label, LabelInputContainer } from "@/components/ui/input/label";
 import { Input } from "@/components/ui/input/input";
 import DefaultForm from "./components/defaultForm";
 import { useForm } from "react-hook-form";
+import { useAuth } from "./components/authProvider";
+import { useNavigate } from "react-router-dom";
 
 export default function Signin() {
+  const { handleLogin, loading, isLogged } = useAuth();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -16,29 +20,19 @@ export default function Signin() {
     }
   } = useForm();
 
+  // useEffect(() => {
+  //   console.log("Loading: " + loading);
+  // }, [loading]);
+  //
+  // useEffect(() => {
+  //   console.log("isSubmitting: " + isSubmitting);
+  // }, [isSubmitting]);
+  //
   const onSubmit = async (data) => {
-    console.log(data);
-    fetch(import.meta.env.VITE_API_URL + "/api/Auth/Login", {
-      method: "POST",
-      headers: {
-        "access-control-allow-origin": "*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }).then((response) => {
-        if (response.ok) {
-          console.log("Success");
-          return response.json();
-        } else {
-          console.log("Failed");
-          throw new Error("Failed to login");
-        }}).then((data) => {
-        console.log(data);
-        sessionStorage.setItem("token", data.token);
-        sessionStorage.setItem("userRole", data.userRole);
-      }).catch((error) => {
-        console.error(error);
-      })
+    await handleLogin(data);
+    if (isLogged) {
+      navigate("/dashboard");
+    }
   };
 
   // const {data, isLoading} = useQuery({
@@ -51,9 +45,9 @@ export default function Signin() {
   return (
     <DefaultForm
       onSubmit={handleSubmit(onSubmit)}
-      isSubmitting={isSubmitting}
+      isSubmitting={isSubmitting || loading}
       title="Sign in"
-      submitText="Sign in"
+      submitText={isSubmitting || loading ? "Loading..." : "Sign in"}
       redirects={[
         {
           text: "Don't have an account yet?",
@@ -71,6 +65,7 @@ export default function Signin() {
           id="username"
           placeholder="awesomearcher123"
           type="text"
+          disabled={isSubmitting || loading}
         />
         {errors.email && <p className="text-accent text-sm">{errors.email.message}</p>}
       </LabelInputContainer>
@@ -87,6 +82,7 @@ export default function Signin() {
           id="password"
           placeholder="••••••••••••"
           type="password"
+          disabled={isSubmitting || loading}
         />
         {errors.password && <p className="text-accent text-sm">{errors.password.message}</p>}
       </LabelInputContainer>

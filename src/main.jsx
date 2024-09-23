@@ -16,6 +16,8 @@ import Competition from './Competition.jsx';
 import Dashboard from './Dashboard.jsx';
 import History from './History.jsx';
 import Schedule from './Schedule.jsx';
+import AuthProvider from './components/authProvider.jsx';
+import ProtectedRoute from './components/protectedRoute.jsx';
 
 const queryClient = new QueryClient();
 
@@ -30,27 +32,39 @@ const router = createBrowserRouter([
       },
       {
         path: "/signin",
-        element: <Signin />,
+        element: <ProtectedRoute loggedOutOnly>
+          <Signin />
+        </ProtectedRoute>,
       },
       {
         path: "/signup",
-        element: <Signup />,
+        element: <ProtectedRoute loggedOutOnly>
+          <Signup />
+        </ProtectedRoute>,
       },
       {
         path: "/signup/individual",
-        element: <RegisterIndividual />,
+        element: <ProtectedRoute loggedOutOnly>
+          <RegisterIndividual />
+        </ProtectedRoute>,
       },
       {
         path: "/signup/organization",
-        element: <RegisterOrganization />,
+        element: <ProtectedRoute loggedOutOnly>
+          <RegisterOrganization />
+        </ProtectedRoute>,
       },
       {
         path: "/create-competition",
-        element: <Competition />,
+        element: <ProtectedRoute allowedRoles={[1, 2]}>
+          <Competition />
+        </ProtectedRoute>,
       },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: <ProtectedRoute>
+          <Dashboard />
+        </ProtectedRoute>,
       },
       {
         path: "/scoring",
@@ -62,11 +76,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/history",
-        element: <History />,
+        element: <ProtectedRoute>
+          <History />
+        </ProtectedRoute>,
       },
       {
         path: "/schedule",
-        element: <Schedule />,
+        element: <ProtectedRoute>
+          <Schedule />
+        </ProtectedRoute>,
       },
       {
         path: "/my-club",
@@ -94,8 +112,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router}/>
-    </QueryClientProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router}/>
+      </QueryClientProvider>
+    </AuthProvider>
   </React.StrictMode>,
 )
