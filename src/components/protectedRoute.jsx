@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./authProvider";
 
-export default function ProtectedRoute({ allowedRoles, loggedOutOnly, children}) {
+const ProtectedRoute = ({ allowedRoles, loggedOutOnly, children}) => {
   const { userRole, isLogged } = useAuth();
   const navigate = useNavigate();
 
@@ -24,3 +24,5 @@ export default function ProtectedRoute({ allowedRoles, loggedOutOnly, children})
 
   return children;
 }
+
+export default ProtectedRoute;

@@ -2,13 +2,13 @@ import { createContext, useContext, useState, useEffect } from 'react'
 
 const AuthContext = createContext(undefined)
 
-export default function AuthProvider({children}) {
+const AuthProvider = ({children}) => {
   const [authToken, setAuthToken] = useState(sessionStorage.getItem('token'));
   const [userRole, setUserRole] = useState(undefined);
   const [isLogged, setIsLogged] = useState(!!sessionStorage.getItem('token'));
   const [loading, setLoading] = useState(false);
 
-  async function handleLogin(loginCredentials) {
+  const handleLogin = async (loginCredentials) => {
     // let success = false;
     setLoading(true);
     fetch(import.meta.env.VITE_API_URL + "/api/Auth/Login", {
@@ -43,7 +43,63 @@ export default function AuthProvider({children}) {
       });
   }
 
-  function handleLogout() {
+  const handleRegister = async (signupCredentials) => {
+    console.log(signupCredentials);
+    setLoading(true);
+    fetch(import.meta.env.VITE_API_URL + "/api/Auth/Register", {
+      method: "POST",
+      headers: {
+        "access-control-allow-origin": "*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(signupCredentials),
+    }).then((response) => {
+        if (response.ok) {
+          console.log("Signup Success");
+          return response.json();
+        } else {
+          console.log("Signup Failed");
+          throw new Error("Failed to signup");
+        }}).then((data) => {
+        console.log(data);
+        setIsLogged(true);
+        sessionStorage.setItem("token", data.token);
+        setAuthToken(data.token);
+        setUserRole(data.userRole);
+      }).catch((error) => {
+        sessionStorage.removeItem('token');
+        setUserRole(null);
+        setIsLogged(false);
+        console.error(error);
+      }).finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const getClubs = async () => {
+    fetch(import.meta.env.VITE_API_URL + "/api/Club", {
+      method: "GET",
+      headers: {
+        "access-control-allow-origin": "*",
+        "Content-Type": "application",
+      },
+    }).then((response) => {
+        if (response.ok) {
+          console.log("Get Clubs Success");
+          return response.json();
+        } else {
+          console.log("Get Clubs Failed");
+          throw new Error("Failed to get clubs");
+        }}).then((data) => {
+        console.log(data);
+      }).catch((error) => {
+        console.error(error);
+      }).finally(() => {
+        setLoading(false);
+      })
+  };
+
+  const handleLogout = () => {
     sessionStorage.removeItem('token');
     setAuthToken(null);
     setUserRole(null);
@@ -62,6 +118,8 @@ export default function AuthProvider({children}) {
         isLogged,
         loading,
         handleLogin,
+        handleRegister,
+        getClubs,
         handleLogout
       }}
     >
@@ -70,10 +128,12 @@ export default function AuthProvider({children}) {
   )
 }
 
-export function useAuth() {
+export const useAuth = () => {
   const context = useContext(AuthContext)
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider')
   }
   return context
 }
+
+export default AuthProvider;
