@@ -18,6 +18,7 @@ import History from './History.jsx';
 import Schedule from './Schedule.jsx';
 import AuthProvider from './components/authProvider.jsx';
 import ProtectedRoute from './components/protectedRoute.jsx';
+import ScoreSheet from './components/scoreSheet/scoreSheet.jsx';
 
 const queryClient = new QueryClient();
 
@@ -68,7 +69,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/scoring",
-        element: <h1>Scoring</h1>,
+        element: <ProtectedRoute>
+          <ScoreSheet />
+        </ProtectedRoute>,
       },
       {
         path: "/competition",
