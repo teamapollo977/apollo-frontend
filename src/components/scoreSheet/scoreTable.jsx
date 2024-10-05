@@ -1,13 +1,12 @@
 import React from "react";
 import './index.css';
 
-export default function ScoreTable({children, tableIndex, columns, rows}) {
+export default function ScoreTable({children, tableIndex, arrows, rounds}) {
 
-
-  const columnItems = Array(columns).fill().map((_, i) => (
+  const columnItems = Array(arrows).fill().map((_, i) => (
         <span key={i} style={{ gridArea: `col-${i + 1}` }}>{i + 1}</span>));
 
-  const rowItems = Array(rows).fill().map((_, i) => (
+  const rowItems = Array(rounds).fill().map((_, i) => (
         <span key={i} style={{ gridArea: `row-${i + 1}` }}>{i + 1}</span>));
 
 

@@ -20,13 +20,13 @@ const AuthProvider = ({children}) => {
       body: JSON.stringify(loginCredentials),
     }).then((response) => {
         if (response.ok) {
-          console.log("Login Success");
+          // console.log("Login Success");
           return response.json();
         } else {
-          console.log("Login Failed");
+          // console.log("Login Failed");
           throw new Error("Failed to login");
         }}).then((data) => {
-        console.log(data);
+        // console.log(data);
         setIsLogged(true);
         sessionStorage.setItem("token", data.token);
         setAuthToken(data.token);
@@ -36,7 +36,7 @@ const AuthProvider = ({children}) => {
         sessionStorage.removeItem('token');
         setUserRole(null);
         setIsLogged(false);
-        console.error(error);
+        // console.error(error);
       }).finally(() => {
         setLoading(false);
         // return success;
@@ -44,7 +44,7 @@ const AuthProvider = ({children}) => {
   }
 
   const handleRegister = async (signupCredentials) => {
-    console.log(signupCredentials);
+    // console.log(signupCredentials);
     setLoading(true);
     fetch(import.meta.env.VITE_API_URL + "/api/Auth/Register", {
       method: "POST",
@@ -55,13 +55,13 @@ const AuthProvider = ({children}) => {
       body: JSON.stringify(signupCredentials),
     }).then((response) => {
         if (response.ok) {
-          console.log("Signup Success");
+          // console.log("Signup Success");
           return response.json();
         } else {
-          console.log("Signup Failed");
+          // console.log("Signup Failed");
           throw new Error("Failed to signup");
         }}).then((data) => {
-        console.log(data);
+        // console.log(data);
         setIsLogged(true);
         sessionStorage.setItem("token", data.token);
         setAuthToken(data.token);
@@ -70,7 +70,7 @@ const AuthProvider = ({children}) => {
         sessionStorage.removeItem('token');
         setUserRole(null);
         setIsLogged(false);
-        console.error(error);
+        // console.error(error);
       }).finally(() => {
         setLoading(false);
       });
@@ -85,15 +85,15 @@ const AuthProvider = ({children}) => {
       },
     }).then((response) => {
         if (response.ok) {
-          console.log("Get Clubs Success");
+          // console.log("Get Clubs Success");
           return response.json();
         } else {
-          console.log("Get Clubs Failed");
+          // console.log("Get Clubs Failed");
           throw new Error("Failed to get clubs");
         }}).then((data) => {
-        console.log(data);
+        // console.log(data);
       }).catch((error) => {
-        console.error(error);
+        // console.error(error);
       }).finally(() => {
         setLoading(false);
       })
@@ -106,10 +106,10 @@ const AuthProvider = ({children}) => {
     setIsLogged(false);
   }
 
-  useEffect(() => {
-    console.log('AuthToken: ' + authToken + ' UserRole: ' + userRole + ' IsLogged: ' + isLogged);
-  }, [authToken, userRole, isLogged])
-
+  // useEffect(() => {
+  //   console.log('AuthToken: ' + authToken + ' UserRole: ' + userRole + ' IsLogged: ' + isLogged);
+  // }, [authToken, userRole, isLogged])
+  //
   return (
     <AuthContext.Provider
       value={{

@@ -7,8 +7,8 @@ const ProtectedRoute = ({ allowedRoles, loggedOutOnly, children}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("UserRole: " + userRole);
-    console.log("AllowedRoles: " + allowedRoles);
+    // console.log("UserRole: " + userRole);
+    // console.log("AllowedRoles: " + allowedRoles);
     if (loggedOutOnly) {
       if (isLogged) {
         navigate("/dashboard");
