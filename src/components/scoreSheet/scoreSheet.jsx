@@ -40,11 +40,14 @@ function ScoreSheet() {
       })
     });
 
-    if (!response.ok) {
+    if (response.ok) {
+      // Give feedback to the user
+      window.alert('Scores saved successfully');
+    } else {
       throw new Error('Failed to save scores');
     }
 
-    // return response.json();
+    return response.json();
   };
 
   // useEffect(() => {
