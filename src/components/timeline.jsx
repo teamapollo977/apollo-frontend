@@ -51,17 +51,31 @@ export const Timeline = ({
                   className="md:hidden block text-2xl mb-4 text-left font-bold text-foreground">
                   {item.date}
                 </h3>
-                <div className="flex flex-col gap-24 justify-center min-w-[50vw] border-accent">
+                <div className="flex flex-col gap-10 justify-center min-w-[50vw] border-accent">
                   {item.content}{" "}
                   <h4 className="text-4xl font-semibold text-foreground">{item.title}</h4>
+                  {item.accumulative && 
+                    <p className="text-foreground text-xl font-semibold">
+                      {`Accumulative Score: ${item.accumulative}`}
+                    </p>
+                  }
                   <p className="text-foreground text-xl font-normal">
-                    {item.location}
+                    {`Arrows: ${item.arrows}`}
                   </p>
                   <p className="text-foreground text-xl font-normal">
-                    {item.time}
+                    {`Ends: ${item.ends}`}
                   </p>
                   <p className="text-foreground text-xl font-normal">
-                    {item.weather}
+                    {`Distance${item.distances?.length > 1 ? "s" : ""}: ${item.distances?.join(", ")}`}
+                  </p>
+                  <p className="text-foreground text-xl font-normal">
+                    {`Location: ${item.location}`}
+                  </p>
+                  <p className="text-foreground text-xl font-normal">
+                    {`Time: ${item.time}`}
+                  </p>
+                  <p className="text-foreground text-xl font-normal">
+                    {`Weather: ${item.weather}`}
                   </p>
                 </div>
               </div>

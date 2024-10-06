@@ -1,58 +1,55 @@
 import React from "react";
-import { Label, LabelInputContainer } from "@/components/ui/input/label";
-import { Input } from "@/components/ui/input/input";
-import DefaultForm from "./components/defaultForm";
 import { Timeline } from "./components/timeline";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "./components/authProvider";
 
 export default function History() {
+  // const [scores, setScores] = useState({});
+  const { authToken } = useAuth();
 
-  const data = [
-    {
-      title: "Shooting",
-      date: "April 20 2024",
-      location: "Deep South Archery Club",
-      time: "5:30pm",
-      weather: "Cloudy",
-    },
-    {
-      title: "Competition",
-      date: "April 21 2024",
-      location: "Alexandra Archery Club",
-      time: "8:30am",
-      weather: "Sunny",
-    },
-    {
-      title: "Shooting",
-      date: "April 22 2024",
-      location: "Deep South Archery Club",
-      time: "5:30pm",
-      weather: "Rainy",
-    },
-    {
-      title: "Competition",
-      date: "April 23 2024",
-      location: "Alexandra Archery Club",
-      time: "8:30am",
-      weather: "Sunny",
-    },
-    {
-      title: "Shooting",
-      date: "April 24 2024",
-      location: "Deep South Archery Club",
-      time: "5:30pm",
-      weather: "Sunny",
-    },
-    {
-      title: "Competition",
-      date: "April 25 2024",
-      location: "Alexandra Archery Club",
-      time: "8:30am",
-      weather: "Sunny",
+  const queryClient = useQueryClient();
+
+  const getScores = async () => {
+    const response = await fetch(import.meta.env.VITE_API_URL + "/api/Score", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${authToken}`,  // Include the Bearer token in the header
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch scores');
     }
-  ];
+
+    return response.json();
+  };
+
+  const { data, isLoading, isError, error } = useQuery({queryKey: ["scores"], queryFn: getScores });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
-    <Timeline data={data} />
+    <Timeline
+      data={data.map((item, index) => ({
+        title: "Shooting Session",
+        accumulative: item.scores.reduce((acc, score) => acc + score, 0),
+        // Date format: MMMM dd yyyy
+        date: new Date(item.createdOn).toLocaleDateString([], {timeZone: 'Pacific/Auckland', month: 'short', day: '2-digit', year: 'numeric'}),
+        time: new Date(item.createdOn).toLocaleTimeString([], {timeZone: 'Pacific/Auckland', hour: '2-digit', minute: '2-digit'}),
+        arrows: item.arrowShots,
+        ends: item.ends,
+        distances: [...new Set(item.distance)],
+        location: "Deep South Archery Club",
+        weather: "Sunny",
+      }))}
+    />
   );
 }
 
