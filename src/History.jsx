@@ -7,8 +7,6 @@ export default function History() {
   // const [scores, setScores] = useState({});
   const { authToken } = useAuth();
 
-  const queryClient = useQueryClient();
-
   const getScores = async () => {
     const response = await fetch(import.meta.env.VITE_API_URL + "/api/Score", {
       method: "GET",
@@ -37,10 +35,9 @@ export default function History() {
 
   return (
     <Timeline
-      data={data.map((item, index) => ({
+      data={data.map(item => ({
         title: "Shooting Session",
         accumulative: item.scores.reduce((acc, score) => acc + score, 0),
-        // Date format: MMMM dd yyyy
         date: new Date(item.createdOn).toLocaleDateString([], {timeZone: 'Pacific/Auckland', month: 'short', day: '2-digit', year: 'numeric'}),
         time: new Date(item.createdOn).toLocaleTimeString([], {timeZone: 'Pacific/Auckland', hour: '2-digit', minute: '2-digit'}),
         arrows: item.arrowShots,
@@ -48,7 +45,7 @@ export default function History() {
         distances: [...new Set(item.distance)],
         location: "Deep South Archery Club",
         weather: "Sunny",
-      }))}
+      })).reverse()}
     />
   );
 }

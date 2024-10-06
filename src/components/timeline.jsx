@@ -51,7 +51,7 @@ export const Timeline = ({
                   className="md:hidden block text-2xl mb-4 text-left font-bold text-foreground">
                   {item.date}
                 </h3>
-                <div className="flex flex-col gap-10 justify-center min-w-[50vw] border-accent">
+                <div className="flex flex-col gap-8 justify-center min-w-[50vw] border-accent">
                   {item.content}{" "}
                   <h4 className="text-4xl font-semibold text-foreground">{item.title}</h4>
                   {item.accumulative && 
@@ -60,7 +60,10 @@ export const Timeline = ({
                     </p>
                   }
                   <p className="text-foreground text-xl font-normal">
-                    {`Arrows: ${item.arrows}`}
+                    {`Shots: ${item.arrows}`}
+                  </p>
+                  <p className="text-foreground text-xl font-normal">
+                    {`Arrows: ${item.arrows/item.ends}`}
                   </p>
                   <p className="text-foreground text-xl font-normal">
                     {`Ends: ${item.ends}`}

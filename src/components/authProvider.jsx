@@ -5,7 +5,7 @@ const AuthContext = createContext(undefined)
 const AuthProvider = ({children}) => {
   const [authToken, setAuthToken] = useState(sessionStorage.getItem('token'));
   const [userRole, setUserRole] = useState(undefined);
-  const [userName, setUserName] = useState(undefined);
+  const [userName, setUserName] = useState(sessionStorage.getItem('userName'));
   const [isLogged, setIsLogged] = useState(!!sessionStorage.getItem('token'));
   const [loading, setLoading] = useState(false);
 
@@ -45,7 +45,7 @@ const AuthProvider = ({children}) => {
   }
 
   const handleRegister = async (signupCredentials) => {
-    // console.log(signupCredentials);
+    console.log(signupCredentials);
     setLoading(true);
     fetch(import.meta.env.VITE_API_URL + "/api/Auth/Register", {
       method: "POST",
@@ -67,9 +67,11 @@ const AuthProvider = ({children}) => {
         sessionStorage.setItem("token", data.token);
         setAuthToken(data.token);
         setUserRole(data.userRole);
-        setUserName(data.userName);
+        sessionStorage.setItem("userName", signupCredentials.userName);
+        setUserName(signupCredentials.userName);
       }).catch((error) => {
         sessionStorage.removeItem('token');
+        sessionStorage.removeItem('userName');
         setUserRole(null);
         setIsLogged(false);
         // console.error(error);
@@ -103,8 +105,10 @@ const AuthProvider = ({children}) => {
 
   const handleLogout = () => {
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('userName');
     setAuthToken(null);
     setUserRole(null);
+    setUserName(null);
     setIsLogged(false);
   }
 
@@ -116,6 +120,7 @@ const AuthProvider = ({children}) => {
     <AuthContext.Provider
       value={{
         authToken,
+        userName,
         userRole,
         isLogged,
         loading,
