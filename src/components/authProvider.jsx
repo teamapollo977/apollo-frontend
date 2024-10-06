@@ -5,6 +5,7 @@ const AuthContext = createContext(undefined)
 const AuthProvider = ({children}) => {
   const [authToken, setAuthToken] = useState(sessionStorage.getItem('token'));
   const [userRole, setUserRole] = useState(undefined);
+  const [userName, setUserName] = useState(undefined);
   const [isLogged, setIsLogged] = useState(!!sessionStorage.getItem('token'));
   const [loading, setLoading] = useState(false);
 
@@ -66,6 +67,7 @@ const AuthProvider = ({children}) => {
         sessionStorage.setItem("token", data.token);
         setAuthToken(data.token);
         setUserRole(data.userRole);
+        setUserName(data.userName);
       }).catch((error) => {
         sessionStorage.removeItem('token');
         setUserRole(null);
