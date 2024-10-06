@@ -1,10 +1,9 @@
 import React from "react";
 import { Timeline } from "./components/timeline";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "./components/authProvider";
 
 export default function History() {
-  // const [scores, setScores] = useState({});
   const { authToken } = useAuth();
 
   const getScores = async () => {
@@ -12,7 +11,7 @@ export default function History() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${authToken}`,  // Include the Bearer token in the header
+        "Authorization": `Bearer ${authToken}`,
       },
     });
 
@@ -23,7 +22,7 @@ export default function History() {
     return response.json();
   };
 
-  const { data, isLoading, isError, error } = useQuery({queryKey: ["scores"], queryFn: getScores });
+  const { data, isLoading, isError, error } = useQuery({queryKey: ["getScores"], queryFn: getScores });
 
   if (isLoading) {
     return <div>Loading...</div>;

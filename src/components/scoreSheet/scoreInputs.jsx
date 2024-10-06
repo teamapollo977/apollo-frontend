@@ -1,7 +1,8 @@
 import React from "react";
+import { useEffect } from "react";
 import { useFieldArray, Controller, useForm } from "react-hook-form";
 
-function ScoreInputs({arrows, rounds, tableKey, setTotalXs, setTotalCumulative}) {
+function ScoreInputs({arrows, rounds, tableKey, setTotalXs, setTotalCumulative, setScores}) {
 
   const { control, watch } = useForm({
     defaultValues: {
@@ -30,6 +31,7 @@ function ScoreInputs({arrows, rounds, tableKey, setTotalXs, setTotalCumulative})
   }
 
   const calculateCumulativeTotals = () => {
+    setScores(watchScores.map(round => round.arrows).flat());
     const roundTotals = calculareRoundTotals();
     const cumulative = [];
     roundTotals.reduce((prevTotal, roundTotal, index) => {
@@ -41,6 +43,9 @@ function ScoreInputs({arrows, rounds, tableKey, setTotalXs, setTotalCumulative})
     return cumulative;
   }
 
+  // useEffect(() => {
+  // }, [watchScores]);
+  //
   return (
     <>
       {fields.map((round, rowIndex) => (
