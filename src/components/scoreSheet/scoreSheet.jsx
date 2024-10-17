@@ -33,6 +33,7 @@ function ScoreSheet() {
       },
       body: JSON.stringify({
         scores: scores,
+        eventID: 3,
         targetID: 2,
         ends: 12,
         arrowShots: 5,
