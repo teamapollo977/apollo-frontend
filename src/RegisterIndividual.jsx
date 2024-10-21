@@ -2,8 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Label, LabelInputContainer } from "@/components/ui/input/label";
 import { Input } from "@/components/ui/input/input";
 import DefaultForm from "./components/defaultForm";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useAuth } from "./components/authProvider";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectGroup,
+  SelectLabel,
+  SelectValue,
+} from "@/components/ui/select"
 
 export default function RegisterIndividual() {
   const { getClubs, handleRegister, loading } = useAuth();
@@ -12,6 +21,7 @@ export default function RegisterIndividual() {
 
   const {
     register,
+    control,
     handleSubmit,
     formState: {
       errors,
@@ -53,18 +63,18 @@ export default function RegisterIndividual() {
         },
       ]}
     >
-        <LabelInputContainer>
-          <Label htmlFor="username">Username</Label>
-          <Input
-            id="username"
-            placeholder="Johnarcher123"
-            type="text"
-            {...register("userName", {
-              required: "Username is required",
-            })}
-            disabled={isSubmitting || loading}
-          />
-        </LabelInputContainer>
+      <LabelInputContainer>
+        <Label htmlFor="username">Username</Label>
+        <Input
+          id="username"
+          placeholder="Johnarcher123"
+          type="text"
+          {...register("userName", {
+            required: "Username is required",
+          })}
+          disabled={isSubmitting || loading}
+        />
+      </LabelInputContainer>
       <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
         <LabelInputContainer>
           <Label htmlFor="firstname">First Name</Label>
@@ -94,16 +104,30 @@ export default function RegisterIndividual() {
       <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
         <LabelInputContainer>
           <Label htmlFor="gender">Gender</Label>
-          <Input
-            id="gender"
-            placeholder="Male"
-            type="text"
-            {...register("gender", {
-              required: "Gender is required",
-            })}
-            disabled={isSubmitting || loading}
+          <Controller
+            name="gender"
+            control={control}
+            required="Gender is required"
+            render={({ field }) => (
+              <Select
+                {...field}
+                onValueChange={(value) => field.onChange(value)}
+                id="gender"
+                disabled={isSubmitting || loading}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a gender"/>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Male">Male</SelectItem>
+                  <SelectItem value="Female">Female</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
           />
         </LabelInputContainer>
+
+
         <LabelInputContainer>
           <Label htmlFor="dob">Date of Birth</Label>
           <Input
@@ -145,6 +169,60 @@ export default function RegisterIndividual() {
           />
         </LabelInputContainer>
       </div>
+      <LabelInputContainer>
+        <Label htmlFor="Shooting_Style">Bow Style</Label>
+        <Controller
+          name="Shooting_Style"
+          control={control}
+          required="Bow style is required"
+          render={({ field }) => (
+            <Select
+              id="Shooting_Style"
+              {...field}
+              onValueChange={(value) => field.onChange(value)}
+              required
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select a bow type"/>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup label="Barebow">
+                  <SelectLabel>Barebow</SelectLabel>
+                  <SelectItem value="Barebow-Recurve">Barebow Recurve</SelectItem>
+                  <SelectItem value="Barebow-Compound">Barebow Compound</SelectItem>
+                </SelectGroup>
+                <SelectGroup label="Freestyle">
+                  <SelectLabel>Freestyle</SelectLabel>
+                  <SelectItem value="Freestyle-Limited-Recurve">Freestyle Limited Recurve</SelectItem>
+                  <SelectItem value="Freestyle-Limited-Compound">Freestyle Limited Compound</SelectItem>
+                  <SelectItem value="Freestyle-Unlimited">Freestyle Unlimited</SelectItem>
+                </SelectGroup>
+                <SelectGroup label="Bowhunter">
+                  <SelectLabel>Bowhunter</SelectLabel>
+                  <SelectItem value="Bowhunter-Recurve">Bowhunter Recurve</SelectItem>
+                  <SelectItem value="Bowhunter-Compound">Bowhunter Compound</SelectItem>
+                  <SelectItem value="Bowhunter-Limited">Bowhunter Limited</SelectItem>
+                  <SelectItem value="Bowhunter-Unlimited">Bowhunter Unlimited</SelectItem>
+                </SelectGroup>
+                <SelectGroup label="Professional">
+                  <SelectLabel>Professinal</SelectLabel>
+                  <SelectItem value="Professional-Unlimited">Professional Unlimited</SelectItem>
+                  <SelectItem value="Professional-Limited-recurve">Professional Limited Recurve</SelectItem>
+                  <SelectItem value="Professional-Limited-compound">Professional Limited Compound</SelectItem>
+                </SelectGroup>
+                <SelectGroup label="Others">
+                  <SelectLabel>Others</SelectLabel>
+                  <SelectItem value="Traditional-Recurve-bow">Traditional Recurve Bow</SelectItem>
+                  <SelectItem value="Longbow">Longbow</SelectItem>
+                  <SelectItem value="Historical-bow">Historical Bow</SelectItem>
+                  <SelectItem value="Novice">Novice</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          )}
+        />
+
+      </LabelInputContainer>
       <LabelInputContainer>
         <Label htmlFor="email">Email</Label>
         <Input
