@@ -37,8 +37,8 @@ export default function History() {
       data={data.map(item => ({
         title: "Shooting Session",
         accumulative: item.scores.reduce((acc, score) => acc + score, 0),
-        date: new Date(item.createdOn).toLocaleDateString([], {timeZone: 'Pacific/Auckland', month: 'short', day: '2-digit', year: 'numeric'}),
-        time: new Date(item.createdOn).toLocaleTimeString([], {timeZone: 'Pacific/Auckland', hour: '2-digit', minute: '2-digit'}),
+        date: new Date(item.formattedCreatedOn).toLocaleDateString([], {timeZone: 'Pacific/Auckland', month: 'short', day: '2-digit', year: 'numeric'}),
+        time: new Date(item.formattedCreatedOn).toLocaleTimeString([], {timeZone: 'Pacific/Auckland', hour: '2-digit', minute: '2-digit'}),
         arrows: item.arrowShots,
         ends: item.ends,
         distances: [...new Set(item.distance)],
