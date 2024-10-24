@@ -1,5 +1,4 @@
 import React from "react";
-import { Timeline } from "./components/timeline";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "./components/authProvider";
 
@@ -37,16 +36,16 @@ export default function Analytics() {
     return response.json();
   };
 
-const chartConfig = {
-  score: {
-    label: "Score",
-    color: "var(--chart-1)",
-  },
-  bullseye: {
-    label: "Bullseye",
-    color: "var(--chart-2)",
-  },
-}
+  const chartConfig = {
+    score: {
+      label: "Score",
+      color: "var(--chart-1)",
+    },
+    bullseye: {
+      label: "Bullseye",
+      color: "var(--chart-2)",
+    },
+  }
 
   const { data, isLoading, isError, error } = useQuery({queryKey: ["getScores"], queryFn: getScores });
 
@@ -59,86 +58,88 @@ const chartConfig = {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Scores Over Time</CardTitle>
-        <CardDescription>
-          Showing your archer scores profression over time
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <AreaChart
-            accessibilityLayer
-            data={data.map(item => ({
-              month: new Date(item.formattedCreatedOn).toLocaleDateString([], {timeZone: 'Pacific/Auckland', month: 'short', day: '2-digit'}),
-              scores: item.scores.reduce((acc, score) => acc + score, 0),
-              bullseye: item.scores.reduce((acc, score) => acc + score, 0) * 0.8,
-            })).reverse()}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-            />
-            <YAxis
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickCount={4}
-            />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <defs>
-              <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor="var(--color-score)"
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor="var(--color-score)"
-                  stopOpacity={0.1}
-                />
-              </linearGradient>
-              <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor="var(--color-bullseye)"
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor="var(--color-bullseye)"
-                  stopOpacity={0.1}
-                />
-              </linearGradient>
-            </defs>
-            <Area
-              dataKey="scores"
-              type="natural"
-              fill="url(#fillMobile)"
-              fillOpacity={0.4}
-              stroke="var(--color-bullseye)"
-              stackId="a"
-            />
-            <Area
-              dataKey="bullseye"
-              type="natural"
-              fill="url(#fillDesktop)"
-              fillOpacity={0.4}
-              stroke="var(--color-score)"
-              stackId="a"
-            />
-          </AreaChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
+    <div className="min-w-[50vw] px-2">
+      <Card>
+        <CardHeader>
+          <CardTitle>Scores Over Time</CardTitle>
+          <CardDescription>
+            Showing your archer scores profression over time
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ChartContainer config={chartConfig}>
+            <AreaChart
+              accessibilityLayer
+              data={data.map(item => ({
+                month: new Date(item.formattedCreatedOn).toLocaleDateString([], {timeZone: 'Pacific/Auckland', month: 'short', day: '2-digit'}),
+                scores: item.scores.reduce((acc, score) => acc + score, 0),
+                bullseye: item.scores.reduce((acc, score) => acc + score, 0) * 0.8,
+              })).reverse()}
+              margin={{
+                left: 12,
+                right: 12,
+              }}
+            >
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="month"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+              />
+              <YAxis
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                tickCount={4}
+              />
+              <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+              <defs>
+                <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
+                  <stop
+                    offset="5%"
+                    stopColor="var(--color-score)"
+                    stopOpacity={0.8}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor="var(--color-score)"
+                    stopOpacity={0.1}
+                  />
+                </linearGradient>
+                <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
+                  <stop
+                    offset="5%"
+                    stopColor="var(--color-bullseye)"
+                    stopOpacity={0.8}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor="var(--color-bullseye)"
+                    stopOpacity={0.1}
+                  />
+                </linearGradient>
+              </defs>
+              <Area
+                dataKey="scores"
+                type="natural"
+                fill="url(#fillMobile)"
+                fillOpacity={0.4}
+                stroke="var(--color-bullseye)"
+                stackId="a"
+              />
+              <Area
+                dataKey="bullseye"
+                type="natural"
+                fill="url(#fillDesktop)"
+                fillOpacity={0.4}
+                stroke="var(--color-score)"
+                stackId="a"
+              />
+            </AreaChart>
+          </ChartContainer>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
