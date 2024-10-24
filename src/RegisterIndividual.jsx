@@ -33,9 +33,9 @@ export default function RegisterIndividual() {
     handleRegister({
       ...data,
       affiliation_Number: "123456",
-      clubID: 1,
-      rolesId: 3,
-      divisionsId: 1,
+      // clubID: 1, NOT NEEDED ANYMORE
+      // rolesId: 3, NOT NEEDED ANYMORE
+      // divisionsId: 1, NOT NEEDED ANYMORE
     });
   };
 
@@ -223,6 +223,33 @@ export default function RegisterIndividual() {
         />
 
       </LabelInputContainer>
+
+      <LabelInputContainer>
+        <Label htmlFor="Club">Club</Label>
+        <Controller
+          name="Club"
+          control={control}
+          required="Club is required"
+          render={({ field }) => (
+            <Select
+              id="Club"
+              {...field}
+              onValueChange={(value) => field.onChange(value)}
+              required
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select a Club"/>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="club 1">club 1</SelectItem>
+                <SelectItem value="club 2">club 2</SelectItem>
+                <SelectItem value="club 3">club 3</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
+        />
+
+      </LabelInputContainer>
       <LabelInputContainer>
         <Label htmlFor="email">Email</Label>
         <Input
@@ -235,6 +262,32 @@ export default function RegisterIndividual() {
           disabled={isSubmitting || loading}
         />
       </LabelInputContainer>
+      <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+      <LabelInputContainer>
+        <Label htmlFor="clubPassword">Club Code</Label>
+        <Input
+          id="clubPassword"
+          placeholder="secretclubcode"
+          type="text"
+          {...register("clubPassword", {
+            required: "clubPassword is required",
+          })}
+          disabled={isSubmitting || loading}
+        />
+      </LabelInputContainer>
+      <LabelInputContainer>
+        <Label htmlFor="email">Affiliation Number</Label>
+        <Input
+          id="clubPassword"
+          placeholder="12345"
+          type="text"
+          {...register("clubPassword", {
+            required: "clubPassword is required",
+          })}
+          disabled={isSubmitting || loading}
+        />
+      </LabelInputContainer>
+      </div>
       <LabelInputContainer>
         <Label htmlFor="password">Password</Label>
         <Input
