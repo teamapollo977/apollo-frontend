@@ -80,6 +80,42 @@ const AuthProvider = ({children}) => {
       });
   };
 
+  const handleRegisterClub = async (signupCredentials, OTP, OTPEmail) => {
+    console.log(signupCredentials);
+    setLoading(true);
+    fetch(import.meta.env.VITE_API_URL + "/api/Auth/RegisterClub?otp=" + OTP + "&email=" + OTPEmail, {
+      method: "POST",
+      headers: {
+        "access-control-allow-origin": "*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(signupCredentials),
+    }).then((response) => {
+        if (response.ok) {
+          // console.log("Signup Success");
+          return response.json();
+        } else {
+          // console.log("Signup Failed");
+          throw new Error("Failed to signup");
+        }}).then((data) => {
+        // console.log(data);
+        setIsLogged(true);
+        sessionStorage.setItem("token", data.token);
+        setAuthToken(data.token);
+        setUserRole(data.userRole);
+        sessionStorage.setItem("userName", signupCredentials.userName);
+        setUserName(signupCredentials.userName);
+      }).catch((error) => {
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('userName');
+        setUserRole(null);
+        setIsLogged(false);
+        // console.error(error);
+      }).finally(() => {
+        setLoading(false);
+      });
+  };
+
   const getClubs = async () => {
     fetch(import.meta.env.VITE_API_URL + "/api/Club", {
       method: "GET",
@@ -126,6 +162,7 @@ const AuthProvider = ({children}) => {
         loading,
         handleLogin,
         handleRegister,
+        handleRegisterClub,
         getClubs,
         handleLogout
       }}

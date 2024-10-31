@@ -33,9 +33,6 @@ export default function RegisterIndividual() {
     handleRegister({
       ...data,
       affiliation_Number: "123456",
-      // clubID: 1, NOT NEEDED ANYMORE
-      // rolesId: 3, NOT NEEDED ANYMORE
-      // divisionsId: 1, NOT NEEDED ANYMORE
     });
   };
 
@@ -102,6 +99,37 @@ export default function RegisterIndividual() {
         </LabelInputContainer>
       </div>
       <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+
+        {/*
+        <LabelInputContainer>
+          <Label htmlFor="gender">Gender</Label>
+          <Select
+            onValueChange={(value) => field.onChange(value)}
+            id="gender"
+            disabled={isSubmitting || loading}
+            required="Gender is required"
+          >
+            <Controller
+              control={control}
+              name="gender"
+              render={({ field }) => (
+                <>
+                  <SelectTrigger
+                    {...field}
+                  >
+                    <SelectValue placeholder="Select a gender"/>
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Male">Male</SelectItem>
+                    <SelectItem value="Female">Female</SelectItem>
+                  </SelectContent>
+                </>
+              )}
+            />
+          </Select>
+        </LabelInputContainer>
+        */}
+
         <LabelInputContainer>
           <Label htmlFor="gender">Gender</Label>
           <Controller
@@ -111,6 +139,7 @@ export default function RegisterIndividual() {
             render={({ field }) => (
               <Select
                 {...field}
+                ref={null}
                 onValueChange={(value) => field.onChange(value)}
                 id="gender"
                 disabled={isSubmitting || loading}
@@ -179,6 +208,7 @@ export default function RegisterIndividual() {
             <Select
               id="Shooting_Style"
               {...field}
+              ref={null}
               onValueChange={(value) => field.onChange(value)}
               required
             >
@@ -225,15 +255,16 @@ export default function RegisterIndividual() {
       </LabelInputContainer>
 
       <LabelInputContainer>
-        <Label htmlFor="Club">Club</Label>
+        <Label htmlFor="club_name">Club</Label>
         <Controller
-          name="Club"
+          name="club_name"
           control={control}
           required="Club is required"
           render={({ field }) => (
             <Select
-              id="Club"
+              id="club_name"
               {...field}
+              ref={null}
               onValueChange={(value) => field.onChange(value)}
               required
             >
@@ -276,13 +307,13 @@ export default function RegisterIndividual() {
         />
       </LabelInputContainer>
       <LabelInputContainer>
-        <Label htmlFor="email">Affiliation Number</Label>
+        <Label htmlFor="affiliation_Number">Affiliation Number</Label>
         <Input
-          id="clubPassword"
+          id="affiliation_Number"
           placeholder="12345"
           type="text"
-          {...register("clubPassword", {
-            required: "clubPassword is required",
+          {...register("affiliation_Number", {
+            required: "Affiliation number is required",
           })}
           disabled={isSubmitting || loading}
         />
