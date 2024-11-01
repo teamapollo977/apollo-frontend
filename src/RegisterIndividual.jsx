@@ -336,8 +336,8 @@ export default function RegisterIndividual() {
         <Input
           id="confirmpassword"
           placeholder="••••••••"
-          type="confirmpassword"
-          {...register("password", {
+          type="password"
+          {...register("confirmpassword", {
             required: "Password is required",
           })}
           disabled={isSubmitting || loading}
