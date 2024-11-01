@@ -336,7 +336,7 @@ export default function RegisterIndividual() {
         <Input
           id="confirmpassword"
           placeholder="••••••••"
-          type="password"
+          type="confirmpassword"
           {...register("password", {
             required: "Password is required",
           })}
