@@ -58,7 +58,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/create-competition",
-        element: <ProtectedRoute allowedRoles={[1, 2]}>
+        element: <ProtectedRoute allowedRoles={["Admin", "President"]}>
           <Competition />
         </ProtectedRoute>,
       },
