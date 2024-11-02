@@ -9,6 +9,26 @@ const AuthProvider = ({children}) => {
   const [isLogged, setIsLogged] = useState(!!sessionStorage.getItem('token'));
   const [loading, setLoading] = useState(false);
 
+  const saveCredentials = (data) => {
+    setAuthToken(data.token);
+    sessionStorage.setItem('token', data.token);
+    setUserRole(data.userRoll);
+    sessionStorage.setItem('userRole', data.userRoll);
+    setUserName(data.userName);
+    sessionStorage.setItem('userName', data.userName);
+    setIsLogged(true);
+  }
+
+  const handleLogout = () => {
+    setAuthToken(null);
+    sessionStorage.removeItem('token');
+    setUserRole(null);
+    sessionStorage.removeItem('userRole');
+    setUserName(null);
+    sessionStorage.removeItem('userName');
+    setIsLogged(false);
+  }
+
   const handleLogin = async (loginCredentials) => {
     // let success = false;
     setLoading(true);
@@ -27,17 +47,9 @@ const AuthProvider = ({children}) => {
           // console.log("Login Failed");
           throw new Error("Failed to login");
         }}).then((data) => {
-        // console.log(data);
-        setIsLogged(true);
-        sessionStorage.setItem("token", data.token);
-        setAuthToken(data.token);
-        setUserRole(data.userRole);
-        // success = true;
+        saveCredentials(data);
       }).catch((error) => {
-        sessionStorage.removeItem('token');
-        setUserRole(null);
-        setIsLogged(false);
-        // console.error(error);
+        handleLogout();
       }).finally(() => {
         setLoading(false);
         // return success;
@@ -62,19 +74,9 @@ const AuthProvider = ({children}) => {
           // console.log("Signup Failed");
           throw new Error("Failed to signup");
         }}).then((data) => {
-        // console.log(data);
-        setIsLogged(true);
-        sessionStorage.setItem("token", data.token);
-        setAuthToken(data.token);
-        setUserRole(data.userRole);
-        sessionStorage.setItem("userName", signupCredentials.userName);
-        setUserName(signupCredentials.userName);
+        saveCredentials(data);
       }).catch((error) => {
-        sessionStorage.removeItem('token');
-        sessionStorage.removeItem('userName');
-        setUserRole(null);
-        setIsLogged(false);
-        // console.error(error);
+        handleLogout();
       }).finally(() => {
         setLoading(false);
       });
@@ -98,26 +100,16 @@ const AuthProvider = ({children}) => {
           // console.log("Signup Failed");
           throw new Error("Failed to signup");
         }}).then((data) => {
-        // console.log(data);
-        setIsLogged(true);
-        sessionStorage.setItem("token", data.token);
-        setAuthToken(data.token);
-        setUserRole(data.userRole);
-        sessionStorage.setItem("userName", signupCredentials.userName);
-        setUserName(signupCredentials.userName);
+        saveCredentials(data);
       }).catch((error) => {
-        sessionStorage.removeItem('token');
-        sessionStorage.removeItem('userName');
-        setUserRole(null);
-        setIsLogged(false);
-        // console.error(error);
+        handleLogout();
       }).finally(() => {
         setLoading(false);
       });
   };
 
   const getClubs = async () => {
-    fetch(import.meta.env.VITE_API_URL + "/api/Club", {
+    return await fetch(import.meta.env.VITE_API_URL + "/api/Club", {
       method: "GET",
       headers: {
         "access-control-allow-origin": "*",
@@ -131,22 +123,14 @@ const AuthProvider = ({children}) => {
           // console.log("Get Clubs Failed");
           throw new Error("Failed to get clubs");
         }}).then((data) => {
-        // console.log(data);
+        return data;
       }).catch((error) => {
-        // console.error(error);
+        throw new Error("Failed to get clubs");
+        console.error(error);
       }).finally(() => {
         setLoading(false);
       })
   };
-
-  const handleLogout = () => {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('userName');
-    setAuthToken(null);
-    setUserRole(null);
-    setUserName(null);
-    setIsLogged(false);
-  }
 
   // useEffect(() => {
   //   console.log('AuthToken: ' + authToken + ' UserRole: ' + userRole + ' IsLogged: ' + isLogged);
