@@ -4,9 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 // import { Target } from "lucide-react";
 import Target from "../assets/target.jsx";
 
-export const Timeline = ({
-  data
-}) => {
+export const Timeline = ({data}) => {
   const ref = useRef(null);
   const containerRef = useRef(null);
   const [height, setHeight] = useState(0);
