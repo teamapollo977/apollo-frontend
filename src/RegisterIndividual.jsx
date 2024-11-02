@@ -17,7 +17,7 @@ import {
 export default function RegisterIndividual() {
   const { getClubs, handleRegister, loading } = useAuth();
   // const { handleRegister, loading } = useAuth();
-  // const [clubs, setClubs] = useState([]);
+  const [clubs, setClubs] = useState([]);
 
   const {
     register,
@@ -36,11 +36,15 @@ export default function RegisterIndividual() {
     });
   };
 
-  // useEffect(async () => {
-  //   const clubsList = await getClubs();
-  //   console.log(clubsList);
-  //   setClubs(clubsList);
-  // }, []);
+  const loadClubs = async () => {
+    const clubsList = await getClubs();
+    console.log(clubsList);
+    setClubs(clubsList);
+  }
+
+  useEffect(() => {
+    loadClubs();
+  }, []);
 
   return (
     <DefaultForm
@@ -272,9 +276,9 @@ export default function RegisterIndividual() {
                 <SelectValue placeholder="Select a Club"/>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="club 1">club 1</SelectItem>
-                <SelectItem value="club 2">club 2</SelectItem>
-                <SelectItem value="club 3">club 3</SelectItem>
+                {clubs.map((club) => (
+                  <SelectItem key={club.name} value={club.name}>{club.name}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
           )}

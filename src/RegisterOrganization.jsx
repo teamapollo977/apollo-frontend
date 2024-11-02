@@ -1,10 +1,11 @@
 import React from "react";
-import { Label, LabelInputContainer } from "@/components/ui/input/label";
-import { Input } from "@/components/ui/input/input";
-import DefaultForm from "./components/defaultForm";
+import { useSearchParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { useAuth } from "./components/authProvider";
 
+import { Label, LabelInputContainer } from "@/components/ui/input/label";
+import { Input } from "@/components/ui/input/input";
+import DefaultForm from "./components/defaultForm";
 import {
   Select,
   SelectContent,
@@ -14,23 +15,24 @@ import {
   SelectLabel,
   SelectValue,
 } from "@/components/ui/select"
-
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
+import { useEffect } from "react";
 
 export default function RegisterOrganization() {
   // const { password, setPassword } = React.useState("");
   // const { confirmPassword, setConfirmPassword } = React.useState("");
   const { getClubs, handleRegisterClub, loading } = useAuth();
+  const [urlParams] = useSearchParams();
 
   const {
     register,
     control,
     handleSubmit,
+    reset,
     formState: {
       errors,
       isSubmitting,
@@ -40,6 +42,13 @@ export default function RegisterOrganization() {
   const handleSignup = (data) => {
     handleRegisterClub(data, data.otp, data.otp_email);
   };
+
+  useEffect(() => {
+    reset({
+      otp: urlParams.get("otp"),
+      otp_email: urlParams.get("email"),
+    }, { keepDefaultValues: true });
+  }, [urlParams]);
 
   return (
     <DefaultForm
