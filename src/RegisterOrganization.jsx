@@ -25,7 +25,7 @@ import { useEffect } from "react";
 export default function RegisterOrganization() {
   // const { password, setPassword } = React.useState("");
   // const { confirmPassword, setConfirmPassword } = React.useState("");
-  const { getClubs, handleRegisterClub, loading } = useAuth();
+  const { handleRegisterClub, loading } = useAuth();
   const [urlParams] = useSearchParams();
 
   const {

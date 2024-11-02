@@ -7,13 +7,9 @@ const ProtectedRoute = ({ allowedRoles, loggedOutOnly, children}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // console.log("UserRole: " + userRole);
-    // console.log("AllowedRoles: " + allowedRoles);
-    if (loggedOutOnly) {
-      if (isLogged) {
-        navigate("/dashboard");
-      }
-    } else if (!isLogged || (allowedRoles && !allowedRoles.includes(userRole))) {
+    if (loggedOutOnly && isLogged || (allowedRoles && !allowedRoles.includes(userRole))) {
+      navigate("/dashboard");
+    } else if (!isLogged) {
       navigate("/signin");
     }
   }, [userRole, allowedRoles, navigate]);

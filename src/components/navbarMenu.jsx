@@ -20,7 +20,7 @@ const shooting = [
   },
   {
     title: "Competition",
-    href: "/create-competition",
+    href: "/admin/create-competition",
     description:
       "Participate in archery competitions organized by your club.",
   },

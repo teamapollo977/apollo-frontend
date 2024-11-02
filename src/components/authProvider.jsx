@@ -4,7 +4,7 @@ const AuthContext = createContext(undefined)
 
 const AuthProvider = ({children}) => {
   const [authToken, setAuthToken] = useState(sessionStorage.getItem('token'));
-  const [userRole, setUserRole] = useState(undefined);
+  const [userRole, setUserRole] = useState(sessionStorage.getItem('userRole'));
   const [userName, setUserName] = useState(sessionStorage.getItem('userName'));
   const [isLogged, setIsLogged] = useState(!!sessionStorage.getItem('token'));
   const [loading, setLoading] = useState(false);
@@ -108,30 +108,6 @@ const AuthProvider = ({children}) => {
       });
   };
 
-  const getClubs = async () => {
-    return await fetch(import.meta.env.VITE_API_URL + "/api/Club", {
-      method: "GET",
-      headers: {
-        "access-control-allow-origin": "*",
-        "Content-Type": "application",
-      },
-    }).then((response) => {
-        if (response.ok) {
-          // console.log("Get Clubs Success");
-          return response.json();
-        } else {
-          // console.log("Get Clubs Failed");
-          throw new Error("Failed to get clubs");
-        }}).then((data) => {
-        return data;
-      }).catch((error) => {
-        throw new Error("Failed to get clubs");
-        console.error(error);
-      }).finally(() => {
-        setLoading(false);
-      })
-  };
-
   // useEffect(() => {
   //   console.log('AuthToken: ' + authToken + ' UserRole: ' + userRole + ' IsLogged: ' + isLogged);
   // }, [authToken, userRole, isLogged])
@@ -147,7 +123,6 @@ const AuthProvider = ({children}) => {
         handleLogin,
         handleRegister,
         handleRegisterClub,
-        getClubs,
         handleLogout
       }}
     >

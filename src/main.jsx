@@ -12,7 +12,7 @@ import RegisterIndividual from './RegisterIndividual.jsx'
 import RegisterOrganization from './RegisterOrganization.jsx'
 import Navbar from './components/navbar.jsx';
 import Signin from './Signin.jsx';
-import Competition from './Competition.jsx';
+import CreateCompetition from './CreateCompetition.jsx';
 import Dashboard from './Dashboard.jsx';
 import History from './History.jsx';
 import Schedule from './Schedule.jsx';
@@ -57,9 +57,9 @@ const router = createBrowserRouter([
         </ProtectedRoute>,
       },
       {
-        path: "/create-competition",
-        element: <ProtectedRoute allowedRoles={["Admin", "President"]}>
-          <Competition />
+        path: "/admin/create-competition",
+        element: <ProtectedRoute allowedRoles={["Admin", "Club President"]}>
+          <CreateCompetition />
         </ProtectedRoute>,
       },
       {

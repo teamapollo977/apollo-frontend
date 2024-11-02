@@ -15,8 +15,8 @@ import {
 } from "@/components/ui/select"
 
 export default function RegisterIndividual() {
-  const { getClubs, handleRegister, loading } = useAuth();
-  // const { handleRegister, loading } = useAuth();
+  const { handleRegister, loading } = useAuth();
+  const [loadingClubs, setLoadingClubs] = useState(true);
   const [clubs, setClubs] = useState([]);
 
   const {
@@ -30,20 +30,29 @@ export default function RegisterIndividual() {
   } = useForm();
 
   const handleSignup = (data) => {
-    handleRegister({
-      ...data,
-      affiliation_Number: "123456",
-    });
+    handleRegister(data);
   };
 
-  const loadClubs = async () => {
-    const clubsList = await getClubs();
-    console.log(clubsList);
-    setClubs(clubsList);
-  }
+  const getClubs = async () => {
+    fetch(import.meta.env.VITE_API_URL + "/api/Club", {
+      method: "GET",
+      headers: {
+        "access-control-allow-origin": "*",
+        "Content-Type": "application",
+      },
+    }).then((response) => {
+        return response.json();
+      }).then((data) => {
+        setClubs(data);
+      }).catch((error) => {
+        throw new Error("Failed to get clubs");
+      }).finally(() => {
+        setLoadingClubs(false);
+      })
+  };
 
   useEffect(() => {
-    loadClubs();
+    getClubs();
   }, []);
 
   return (
@@ -165,7 +174,6 @@ export default function RegisterIndividual() {
           <Label htmlFor="dob">Date of Birth</Label>
           <Input
             id="dob"
-            placeholder="projectmayhem@fc.com"
             type="date"
             {...register("dob", {
               required: "Date of birthday is required",
@@ -271,13 +279,14 @@ export default function RegisterIndividual() {
               ref={null}
               onValueChange={(value) => field.onChange(value)}
               required
+              disabled={loadingClubs}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select a Club"/>
               </SelectTrigger>
               <SelectContent>
                 {clubs.map((club) => (
-                  <SelectItem key={club.name} value={club.name}>{club.name}</SelectItem>
+                  <SelectItem key={club.id} value={club.name}>{club.name}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
