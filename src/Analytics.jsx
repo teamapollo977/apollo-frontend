@@ -63,7 +63,7 @@ export default function Analytics() {
         <CardHeader>
           <CardTitle>Scores Over Time</CardTitle>
           <CardDescription>
-            Showing your archer scores profression over time
+            Your archery scores progression over time
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -73,7 +73,6 @@ export default function Analytics() {
               data={data.map(item => ({
                 month: new Date(item.formattedCreatedOn).toLocaleDateString([], {timeZone: 'Pacific/Auckland', month: 'short', day: '2-digit'}),
                 scores: item.scores.reduce((acc, score) => acc + score, 0),
-                bullseye: item.scores.reduce((acc, score) => acc + score, 0) * 0.8,
               })).reverse()}
               margin={{
                 left: 12,
@@ -110,7 +109,7 @@ export default function Analytics() {
                 <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
                   <stop
                     offset="5%"
-                    stopColor="var(--color-bullseye)"
+                    stopColor="var(--color-score)"
                     stopOpacity={0.8}
                   />
                   <stop
@@ -124,14 +123,6 @@ export default function Analytics() {
                 dataKey="scores"
                 type="natural"
                 fill="url(#fillMobile)"
-                fillOpacity={0.4}
-                stroke="var(--color-bullseye)"
-                stackId="a"
-              />
-              <Area
-                dataKey="bullseye"
-                type="natural"
-                fill="url(#fillDesktop)"
                 fillOpacity={0.4}
                 stroke="var(--color-score)"
                 stackId="a"

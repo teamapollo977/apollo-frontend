@@ -7,6 +7,7 @@ import DefaultButton from "../defaultButton";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { useAuth } from "../authProvider";
+import { toast } from "sonner";
 
 function ScoreSheet() {
   const [firstTableScores, setFirstTableScores] = useState([]);
@@ -39,15 +40,11 @@ function ScoreSheet() {
         arrowShots: 5,
         distance: Array(60).fill(15)
       })
+    }).then((response) => {
+      if (response.ok) toast.success("Scores saved successfully");
+    }).catch((error) => {
+      toast.error("There was an error saving the scores. Please try again.");
     });
-
-    if (response.ok) {
-      // Give feedback to the user
-      window.alert('Scores saved successfully');
-    } else {
-      throw new Error('Failed to save scores');
-    }
-
     return response.json();
   };
 

@@ -23,8 +23,6 @@ import {
 import { useEffect } from "react";
 
 export default function RegisterOrganization() {
-  // const { password, setPassword } = React.useState("");
-  // const { confirmPassword, setConfirmPassword } = React.useState("");
   const { handleRegisterClub, loading } = useAuth();
   const [urlParams] = useSearchParams();
 
@@ -34,7 +32,6 @@ export default function RegisterOrganization() {
     handleSubmit,
     reset,
     formState: {
-      errors,
       isSubmitting,
     }
   } = useForm();

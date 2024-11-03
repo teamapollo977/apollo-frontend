@@ -5,9 +5,11 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Toaster } from 'sonner';
+import './index.css'
+
 import Landing from './Landing.jsx'
 import Signup from './Signup.jsx'
-import './index.css'
 import RegisterIndividual from './RegisterIndividual.jsx'
 import RegisterOrganization from './RegisterOrganization.jsx'
 import Navbar from './components/navbar.jsx';
@@ -23,6 +25,7 @@ import Analytics from './Analytics.jsx';
 import PendingUsers from './PendingUsers.jsx';
 import PendingClubs from './PendingClubs.jsx';
 import InviteClub from './InviteClub.jsx';
+import UpcomingEvents from './UpcomingEvents.jsx';
 
 const queryClient = new QueryClient();
 
@@ -78,8 +81,10 @@ const router = createBrowserRouter([
         </ProtectedRoute>,
       },
       {
-        path: "/competition",
-        element: <h1>Competition</h1>,
+        path: "/upcoming-events",
+        element: <ProtectedRoute>
+          <UpcomingEvents />
+        </ProtectedRoute>,
       },
       {
         path: "/history",
@@ -94,18 +99,10 @@ const router = createBrowserRouter([
         </ProtectedRoute>,
       },
       {
-        path: "/my-club",
-        element: <h1>My Club</h1>,
-      },
-      {
         path: "/analytics",
         element: <ProtectedRoute>
           <Analytics />
         </ProtectedRoute>,
-      },
-      {
-        path: "/profile",
-        element: <h1>Profile</h1>,
       },
       {
         path: "/pending-users",
@@ -133,6 +130,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
+        <Toaster />
         <RouterProvider router={router}/>
       </QueryClientProvider>
     </AuthProvider>

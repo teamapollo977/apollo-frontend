@@ -27,7 +27,7 @@ const shooting = [
   },
   {
     title: "Upcoming Events",
-    href: "/competition",
+    href: "/upcoming-events",
     description: "Check archery events available for you.",
   },
   {
@@ -84,10 +84,6 @@ export function NavbarMenu() {
   useEffect(() => {
     checkPermissions();
   }, [userRole]);
-
-  useEffect(() => {
-    console.log(managementOptions);
-  }, [managementOptions]);
 
   return (
     <NavigationMenu>

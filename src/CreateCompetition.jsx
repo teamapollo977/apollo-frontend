@@ -1,13 +1,24 @@
 import React from "react";
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { toast } from "sonner";
+
 import { useAuth } from "./components/authProvider";
 import DefaultForm from "./components/defaultForm";
 
 import { Label, LabelInputContainer } from "@/components/ui/input/label";
 import { Input } from "@/components/ui/input/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export default function CreateCompetition() {
-  const { authToken, loading } = useAuth();
+  const { authToken } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -19,27 +30,26 @@ export default function CreateCompetition() {
     }
   } = useForm();
 
-  const handleEventCreation = async () => {
+  const onSubmit = async (data) => {
+    setLoading(true);
     await fetch(import.meta.env.VITE_API_URL + "/api/Event", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${authToken}`,
       },
+      body: JSON.stringify(data),
     }).then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-      }).then((data) => {
-        return data;
-      }).catch((error) => {
-        throw new Error("There was an error creating the event. Please try again.");
-      });
+      if (response.ok) toast.success("Event created successfully");
+    }).catch((error) => {
+      toast.error("There was an error creating the event. Please try again.");
+    });
+    setLoading(false);
   };
 
   return (
     <DefaultForm
-      handleSubmit={handleSubmit(handleEventCreation)}
+      onSubmit={handleSubmit(onSubmit)}
       title="Create a new archery competition"
       submitText="Submit &rarr;"
     >
@@ -66,6 +76,34 @@ export default function CreateCompetition() {
           })}
           disabled={isSubmitting || loading}
         />
+      </LabelInputContainer>
+      <LabelInputContainer>
+        <Label htmlFor="type">Type</Label>
+        <Controller
+          name="type"
+          control={control}
+          required="Event type is required"
+          render={({ field }) => (
+            <Select
+              id="type"
+              {...field}
+              ref={null}
+              onValueChange={(value) => field.onChange(value)}
+              required
+              disabled={loading}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select an event type"/>
+              </SelectTrigger>
+              <SelectContent>
+                  <SelectItem value="Indoor">Indoor</SelectItem>
+                  <SelectItem value="Outdoor">Outdoor</SelectItem>
+                  <SelectItem value="Field">Field</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
+        />
+
       </LabelInputContainer>
       <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
         <LabelInputContainer>
