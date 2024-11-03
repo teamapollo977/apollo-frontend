@@ -32,13 +32,10 @@ const shooting = [
     description: "Check archery events available for you.",
   },
   {
-    title: "Your Events",
+    title: "My Events",
     href: "/schedule",
     description: "See archery events you are taking part in.",
   },
-]
-
-const profile = [
   {
     title: "Analytics",
     href: "/analytics",
@@ -47,7 +44,7 @@ const profile = [
   },
 ]
 
-const profilePresident = [
+const managementPresident = [
   {
     title: "Create Competition",
     href: "/create-competition",
@@ -60,7 +57,7 @@ const profilePresident = [
   },
 ]
 
-const profileAdmin = [
+const managementAdmin = [
   {
     title: "Pending Clubs",
     href: "/admin/pending-clubs",
@@ -73,21 +70,16 @@ const profileAdmin = [
   },
 ]
 
-
-
 export function NavbarMenu() {
-  const [ profileOptions, setProfileOptions ] = useState(profile);
+  const [ managementOptions, setManagementOptions ] = useState(managementPresident);
   const { userRole } = useAuth();
 
   const checkPermissions = () => {
-    let options = profile;
-    if (userRole === "Club President" || userRole === "Admin") {
-      options = [...profile, ...profilePresident];
-      if (userRole === "Admin") {
-        options = [...options, ...profileAdmin];
-      }
+    let options = managementPresident;
+    if (userRole === "Admin") {
+      options = [...options, ...managementAdmin];
     }
-    setProfileOptions(options);
+    setManagementOptions(options);
   }
 
   useEffect(() => {
@@ -95,8 +87,8 @@ export function NavbarMenu() {
   }, [userRole]);
 
   useEffect(() => {
-    console.log(profileOptions);
-  }, [profileOptions]);
+    console.log(managementOptions);
+  }, [managementOptions]);
 
   return (
     <NavigationMenu>
@@ -108,6 +100,23 @@ export function NavbarMenu() {
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
+        {(userRole === "Admin" || userRole === "President") && (
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Management</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+              {managementOptions.map((item) => (
+                <ListItem
+                  key={item.title}
+                  title={item.title}
+                  to={item.href}
+                >
+                  {item.description}
+                </ListItem>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>)}
         <NavigationMenuItem>
           <NavigationMenuTrigger>Shooting</NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -123,29 +132,6 @@ export function NavbarMenu() {
               ))}
             </ul>
           </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Profile</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {profileOptions.map((item) => (
-                <ListItem
-                  key={item.title}
-                  title={item.title}
-                  to={item.href}
-                >
-                  {item.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link to="/about">
-              About Us
-            </Link>
-          </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
