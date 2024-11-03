@@ -4,14 +4,12 @@ import { Input } from "@/components/ui/input/input";
 import DefaultForm from "./components/defaultForm";
 import { useForm } from "react-hook-form";
 import { useAuth } from "./components/authProvider";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "sonner";
 
 export default function InviteClub() {
   const { authToken } = useAuth();
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const {
     register,
