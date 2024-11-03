@@ -42,15 +42,31 @@ export default function History() {
   return (
     <Timeline
       data={data.map(item => ({
-        title: "Shooting Session",
+        title: item.event_Name,
         accumulative: item.scores.reduce((acc, score) => acc + score, 0),
         date: new Date(item.formattedCreatedOn).toLocaleDateString([], {timeZone: 'Pacific/Auckland', month: 'short', day: '2-digit', year: 'numeric'}),
-        time: new Date(item.formattedCreatedOn).toLocaleTimeString([], {timeZone: 'Pacific/Auckland', hour: '2-digit', minute: '2-digit'}),
-        arrows: item.arrowShots,
-        ends: item.ends,
-        distances: [...new Set(item.distance)],
-        location: "Deep South Archery Club",
-        weather: "Sunny",
+        values: [
+          {
+            value: new Date(item.formattedCreatedOn).toLocaleTimeString([], {timeZone: 'Pacific/Auckland', hour: '2-digit', minute: '2-digit'}),
+            name: "Time",
+          },
+          {
+            name: "Arrows",
+            value: item.arrowShots/item.ends,
+          },
+          {
+            name: "Ends",
+            value: item.ends,
+          },
+          {
+            name: "Distance",
+            value: [...new Set(item.distance)].join(", "),
+          },
+          {
+            name: "Shots",
+            value: item.arrowShots,
+          }
+        ]
       }))}
     />
   );

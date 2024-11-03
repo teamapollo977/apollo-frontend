@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useAuth } from "./components/authProvider";
+import { useAuth } from "@/components/authProvider";
 import { Label, LabelInputContainer } from "@/components/ui/input/label";
 import { Input } from "@/components/ui/input/input";
-import DefaultForm from "./components/defaultForm";
+import DefaultForm from "@/components/defaultForm";
 import {
   Select,
   SelectContent,

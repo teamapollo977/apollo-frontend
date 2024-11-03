@@ -9,13 +9,6 @@ export const Timeline = ({data}) => {
   const containerRef = useRef(null);
   const [height, setHeight] = useState(0);
 
-  useEffect(() => {
-    if (ref.current) {
-      const rect = ref.current.getBoundingClientRect();
-      setHeight(rect.height);
-    }
-  }, [ref]);
-
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start 30%", "end 100%"],
@@ -23,6 +16,17 @@ export const Timeline = ({data}) => {
 
   const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
   const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+
+  useEffect(() => {
+    if (ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      setHeight(rect.height);
+    }
+  }, [ref]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <div className="w-full">
@@ -51,33 +55,20 @@ export const Timeline = ({data}) => {
                 </h3>
                 <div className="flex flex-col gap-8 justify-center min-w-[50vw] border-accent">
                   {item.content}{" "}
-                  <h4 className="text-4xl font-semibold text-foreground">{item.title}</h4>
+
+                  {item.title && 
+                    <h4 className="text-4xl font-semibold text-foreground">{item.title}</h4>
+                  }
                   {item.accumulative && 
                     <p className="text-foreground text-xl font-semibold">
                       {`Accumulative Score: ${item.accumulative}`}
                     </p>
                   }
-                  <p className="text-foreground text-xl font-normal">
-                    {`Shots: ${item.arrows}`}
-                  </p>
-                  <p className="text-foreground text-xl font-normal">
-                    {`Arrows: ${item.arrows/item.ends}`}
-                  </p>
-                  <p className="text-foreground text-xl font-normal">
-                    {`Ends: ${item.ends}`}
-                  </p>
-                  <p className="text-foreground text-xl font-normal">
-                    {`Distance${item.distances?.length > 1 ? "s" : ""}: ${item.distances?.join(", ")}`}
-                  </p>
-                  <p className="text-foreground text-xl font-normal">
-                    {`Location: ${item.location}`}
-                  </p>
-                  <p className="text-foreground text-xl font-normal">
-                    {`Time: ${item.time}`}
-                  </p>
-                  <p className="text-foreground text-xl font-normal">
-                    {`Weather: ${item.weather}`}
-                  </p>
+                  {item?.values?.map(data => (
+                    <p className="text-foreground text-xl font-normal">
+                      {`${data.name}: ${data.value}`}
+                    </p>
+                  ))}
                 </div>
               </div>
             </div>

@@ -5,12 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import DefaultButton from './defaultButton';
 import { NavbarMenu } from './navbarMenu';
 import { useAuth } from './authProvider';
+import { BackgroundLines } from './ui/backgroundLines';
 
 function Navbar() {
   const { isLogged, handleLogout } = useAuth();
   const navigate = useNavigate();
 
-  return (
+  const navbarContent = () => (
     <>
       {(!isLogged || window.location.pathname === "/") && <TargetBackgroundUi />}
       <nav className={`fixed z-50 w-screen min-h-10 flex justify-between items-center px-5 py-2 gap-5 ${isLogged && 'backdrop-blur-md'}`}>
@@ -43,6 +44,16 @@ function Navbar() {
       </main>
     </>
   )
+
+  if (window.location.pathname === "/") {
+    return (
+      <BackgroundLines>
+        {navbarContent()}
+      </BackgroundLines>
+    )
+  } else {
+    return navbarContent();
+  }
 }
 
 export default Navbar;

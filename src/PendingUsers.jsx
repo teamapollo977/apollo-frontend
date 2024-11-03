@@ -1,15 +1,32 @@
 import { useState } from "react";
 import { useAuth } from "./components/authProvider";
 import { useEffect } from "react";
-
 import PendingTable from "./components/PendingTable";
 
+import Cancel from "@/assets/cancel";
+import Confirm from "@/assets/confirm";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { Skeleton } from "./components/ui/skeleton";
 const headers = ["Affiliation", "Name", "Actions"];
 const fields = ["affiliation_Number", "name"];
 
+const styles = {
+  colSpan: {
+    colSpan: 3
+  },
+  gridCols: {
+    gridCols: "grid-cols-[150px_1fr_85px]"
+  }
+}
+
 export default function PendingUsers() {
   const { authToken } = useAuth();
-  const [loadingUsers, setLoadingUsers] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [pendingUsers, setPendingUsers] = useState([]);
 
   const getPendingUsers = async () => {
@@ -28,12 +45,12 @@ export default function PendingUsers() {
     }).catch((error) => {
       throw new Error("There was an error fetching the pending users. Please try again.");
     }).finally(() => {
-      setLoadingUsers(false);
+      setLoading(false);
     });
   };
 
   const approveUser = async (affiliationNumber) => {
-    setLoadingUsers(true);
+    setLoading(true);
     await fetch(import.meta.env.VITE_API_URL + "/api/Auth/ApproveUser/ApproveUser", {
       method: "POST",
       headers: {
@@ -57,7 +74,7 @@ export default function PendingUsers() {
   };
 
   const rejectUser = async (affiliationNumber) => {
-    setLoadingUsers(true);
+    setLoading(true);
     await fetch(import.meta.env.VITE_API_URL + "/api/Auth/RejectUser/RejectUser", {
       method: "POST",
       headers: {
@@ -84,19 +101,59 @@ export default function PendingUsers() {
     getPendingUsers();
   }, []);
 
+  if (!loading && !pendingUsers) {
+    return (
+      <span
+        className="text-lg text-center text-foreground"
+      >
+        There are currently no requests to join your club.
+      </span>
+    );
+  }
+
   return (
-    <PendingTable
-      loading={loadingUsers}
-      emptyMessage="There are currently no requests to join your club."
-      title="Pending Users"
-      fields={fields}
-      headers={headers}
-      columns={3}
-      data={pendingUsers?.map(user => ({...user, name: `${user.firstName} ${user.lastName}`}))}
-      approve={approveUser}
-      reject={rejectUser}
-      objectKey="affiliation_Number"
-      gridCols="grid-cols-[150px_1fr_85px]"
-    />
+    <div className="flex flex-col min-w-[75vw] gap-4 place-items-center p-4">
+      <h1
+        className="font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-br from-inverted-background to-inverted-medium"
+      >Pending Users</h1>
+      <div className={`grid grid-cols-[150px_1fr_85px] gap-4 w-[1000px] max-w-full`}>
+        <div className={`grid grid-cols-subgrid gap-4 col-span-3 font-bold p-4 border-b-2 border-inverted-medium`}>
+          {headers.map((header) => (
+            <span key={header}>{header}</span>
+          ))}
+        </div>
+        {!loading ? pendingUsers?.map((item) => (
+          <div className={`grid grid-cols-subgrid gap-4 col-span-3 border-2 border-transparent hover:border-primary-light rounded-md p-4`}>
+              <span className="text-ellipsis overflow-hidden text-nowrap">
+                {item.affiliation_Number}
+              </span>
+              <span className="text-ellipsis overflow-hidden text-nowrap">
+                {item.name} {item.surname}
+              </span>
+            <div className="flex gap-4 items-center">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger onClick={() => approveUser(item.affiliation_Number)}>
+                    <Confirm/>
+                  </TooltipTrigger>
+                  <TooltipContent>Approve</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger onClick={() => rejectUser(item.affiliation_Number)}>
+                    <Cancel/>
+                  </TooltipTrigger>
+                  <TooltipContent>Reject</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          </div>
+        )) : [...Array(2)].map((_, index) => (
+            <Skeleton key={index} className={`w-[1000px] max-w-full h-16 col-span-3`} />
+          ))
+        }
+      </div>
+    </div>
   );
 }
