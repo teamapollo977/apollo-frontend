@@ -22,6 +22,7 @@ import ScoreSheet from './components/scoreSheet/scoreSheet.jsx';
 import Analytics from './Analytics.jsx';
 import PendingUsers from './PendingUsers.jsx';
 import PendingClubs from './PendingClubs.jsx';
+import InviteClub from './InviteClub.jsx';
 
 const queryClient = new QueryClient();
 
@@ -119,8 +120,10 @@ const router = createBrowserRouter([
         </ProtectedRoute>,
       },
       {
-        path: "/about",
-        element: <h1>About Us</h1>,
+        path: "/admin/invite-club",
+        element: <ProtectedRoute allowedRoles={["Admin"]}>
+          <InviteClub/>
+        </ProtectedRoute>,
       },
     ],
   },

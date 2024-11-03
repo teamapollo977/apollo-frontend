@@ -12,8 +12,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import { useEffect } from "react"
-import { useState } from "react";
+import { useEffect, useState } from "react"
 
 const shooting = [
   {
@@ -65,7 +64,7 @@ const managementAdmin = [
   },
   {
     title: "Invite Club",
-    href: "/admin/club-invite",
+    href: "/admin/invite-club",
     description: "Invite clubs to join Apollo Archery.",
   },
 ]
@@ -100,7 +99,7 @@ export function NavbarMenu() {
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
-        {(userRole === "Admin" || userRole === "President") && (
+        {(userRole === "Admin" || userRole === "Club President") && (
         <NavigationMenuItem>
           <NavigationMenuTrigger>Management</NavigationMenuTrigger>
           <NavigationMenuContent>
