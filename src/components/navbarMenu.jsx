@@ -85,10 +85,6 @@ export function NavbarMenu() {
     checkPermissions();
   }, [userRole]);
 
-  useEffect(() => {
-    console.log(managementOptions);
-  }, [managementOptions]);
-
   return (
     <NavigationMenu>
       <NavigationMenuList>

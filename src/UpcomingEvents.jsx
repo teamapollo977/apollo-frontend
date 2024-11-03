@@ -44,7 +44,7 @@ export default function UpcomingEvents() {
     return <span>Loading...</span>;
   }
 
-  if (!data) {
+  if (!data || data.length === 0) {
     return <span className="text-center">Your are currently not subscribed to any event. Go to the <Link to="/competition" className="underline text-foreground hover:text-accent transition duration-300">events page</Link> to check upcoming events.</span>;
   }
 
