@@ -20,6 +20,8 @@ import AuthProvider from './components/authProvider.jsx';
 import ProtectedRoute from './components/protectedRoute.jsx';
 import ScoreSheet from './components/scoreSheet/scoreSheet.jsx';
 import Analytics from './Analytics.jsx';
+import PendingUsers from './PendingUsers.jsx';
+import PendingClubs from './PendingClubs.jsx';
 
 const queryClient = new QueryClient();
 
@@ -105,8 +107,16 @@ const router = createBrowserRouter([
         element: <h1>Profile</h1>,
       },
       {
-        path: "/settings",
-        element: <h1>Settings</h1>,
+        path: "/pending-users",
+        element: <ProtectedRoute allowedRoles={["Admin", "Club President"]}>
+          <PendingUsers/>
+        </ProtectedRoute>,
+      },
+      {
+        path: "/pending-clubs",
+        element: <ProtectedRoute allowedRoles={["Admin"]}>
+          <PendingClubs/>
+        </ProtectedRoute>,
       },
       {
         path: "/about",

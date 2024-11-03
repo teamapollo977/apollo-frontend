@@ -56,9 +56,14 @@ const profile = [
       "Edit your personal information and preferences.",
   },
   {
-    title: "Settings",
-    href: "/settings",
-    description: "Manage your account settings and preferences.",
+    title: "Pending Users",
+    href: "/pending-users",
+    description: "Approve or reject users requesting to join your club.",
+  },
+  {
+    title: "Pending Clubs",
+    href: "/pending-clubs",
+    description: "Approve or reject clubs requesting to join your association.",
   }
 ]
 

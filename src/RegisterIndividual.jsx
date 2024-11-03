@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { useAuth } from "./components/authProvider";
 import { Label, LabelInputContainer } from "@/components/ui/input/label";
 import { Input } from "@/components/ui/input/input";
 import DefaultForm from "./components/defaultForm";
-import { useForm, Controller } from "react-hook-form";
-import { useAuth } from "./components/authProvider";
 import {
   Select,
   SelectContent,
@@ -30,6 +30,7 @@ export default function RegisterIndividual() {
   } = useForm();
 
   const handleSignup = (data) => {
+    console.log(data);
     handleRegister(data);
   };
 
@@ -74,9 +75,9 @@ export default function RegisterIndividual() {
       ]}
     >
       <LabelInputContainer>
-        <Label htmlFor="username">Username</Label>
+        <Label htmlFor="userName">Username</Label>
         <Input
-          id="username"
+          id="userName"
           placeholder="Johnarcher123"
           type="text"
           {...register("userName", {
@@ -87,9 +88,9 @@ export default function RegisterIndividual() {
       </LabelInputContainer>
       <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
         <LabelInputContainer>
-          <Label htmlFor="firstname">First Name</Label>
+          <Label htmlFor="firstName">First Name</Label>
           <Input
-            id="firstname"
+            id="firstName"
             placeholder="John"
             type="text"
             {...register("firstName", {
@@ -99,9 +100,9 @@ export default function RegisterIndividual() {
           />
         </LabelInputContainer>
         <LabelInputContainer>
-          <Label htmlFor="lastname">Last Name</Label>
+          <Label htmlFor="lastName">Last Name</Label>
           <Input
-            id="lastname"
+            id="lastName"
             placeholder="Johnson"
             type="text"
             {...register("lastName", {
@@ -197,9 +198,9 @@ export default function RegisterIndividual() {
           />
         </LabelInputContainer>
         <LabelInputContainer>
-          <Label htmlFor="emergency">Emergency Contact</Label>
+          <Label htmlFor="emergency_Contact">Emergency Contact</Label>
           <Input
-            id="emergency"
+            id="emergency_Contact"
             placeholder="12 345 6789"
             type="tel"
             {...register("emergency_Contact", {
