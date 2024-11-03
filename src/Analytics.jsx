@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+
 import {
   ChartContainer,
   ChartTooltip,
@@ -51,6 +52,10 @@ export default function Analytics() {
 
   if (isLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (!data || data.length === 0) {
+    return <div>You still have no scores</div>;
   }
 
   if (isError) {

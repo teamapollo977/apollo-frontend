@@ -50,10 +50,7 @@ export default function PendingUsers() {
         affiliation_Number: affiliationNumber,
       }),
     }).then((response) => {
-      if (response.ok) return response.json();
-    }).then((data) => {
-      setPendingUsers(data);
-      toast.success("User approved successfully");
+      if (response.ok) toast.success("User approved successfully");
     }).catch((error) => {
       toast.error("There was an error approving the user. Please try again.");
     }).finally(() => {
@@ -73,10 +70,7 @@ export default function PendingUsers() {
         affiliation_Number: affiliationNumber,
       }),
     }).then((response) => {
-      if (response.ok) return response.json();
-    }).then((data) => {
-      setPendingUsers(data);
-      toast.success("User rejected successfully");
+      if (response.ok) toast.success("User rejected successfully");
     }).catch((error) => {
       toast.error("There was an error rejecting the user. Please try again.");
     }).finally(() => {
