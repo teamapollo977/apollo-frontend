@@ -22,6 +22,7 @@ export default function PendingClubs() {
   const [pendingClubs, setPendingClubs] = useState([]);
 
   const getPendingClubs = async () => {
+    console.log("Fetching pending clubs");
     await fetch(import.meta.env.VITE_API_URL + "/api/Auth/GetPendingClubs/Admin/Pending-Clubs", {
       method: "GET",
       headers: {
@@ -32,6 +33,7 @@ export default function PendingClubs() {
       if (response.ok) return response.json();
     }).then((data) => {
       setPendingClubs(data);
+      console.log("Pending clubs: ", data);
     }).catch((error) => {
       toast.error("There was an error fetching the pending clubs. Please try again.");
     }).finally(() => {
@@ -39,8 +41,8 @@ export default function PendingClubs() {
     });
   };
 
-  const approveClub = async (clubID) => {
-    console.log("Approving club with ID: ", clubID);
+  const approveClub = async (data) => {
+    console.log("Approving club with ID: ", data.clubID);
     setLoading(true);
     await fetch(import.meta.env.VITE_API_URL + "/api/Auth/ApproveRegistration", {
       method: "POST",
@@ -48,9 +50,7 @@ export default function PendingClubs() {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${authToken}`,
       },
-      body: JSON.stringify({
-        clubID: clubID,
-      }),
+      body: JSON.stringify(data),
     }).then((response) => {
       if (response.ok) toast.success("Club approved successfully");
     }).catch((error) => {
@@ -60,8 +60,8 @@ export default function PendingClubs() {
     });
   };
 
-  const rejectClub = async (clubID) => {
-    console.log("Rejecting club with ID: ", clubID);
+  const rejectClub = async (data) => {
+    console.log("Rejecting club with ID: ", data.clubID);
     setLoading(true);
     await fetch(import.meta.env.VITE_API_URL + "/api/Auth/RejectRegistration", {
       method: "POST",
@@ -69,9 +69,7 @@ export default function PendingClubs() {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${authToken}`,
       },
-      body: JSON.stringify({
-        clubID: clubID,
-      }),
+      body: JSON.stringify(data),
     }).then((response) => {
       if (response.ok) toast.success("Club rejected successfully");
     }).catch((error) => {
@@ -119,7 +117,7 @@ export default function PendingClubs() {
             <div className="flex gap-4 items-center">
               <TooltipProvider>
                 <Tooltip>
-                  <TooltipTrigger onClick={() => approveClub(item.clubId)}>
+                  <TooltipTrigger onClick={() => approveClub(item)}>
                     <Confirm/>
                   </TooltipTrigger>
                   <TooltipContent>Approve</TooltipContent>
@@ -127,7 +125,7 @@ export default function PendingClubs() {
               </TooltipProvider>
               <TooltipProvider>
                 <Tooltip>
-                  <TooltipTrigger onClick={() => rejectClub(item.clubId)}>
+                  <TooltipTrigger onClick={() => rejectClub(item)}>
                     <Cancel/>
                   </TooltipTrigger>
                   <TooltipContent>Reject</TooltipContent>
