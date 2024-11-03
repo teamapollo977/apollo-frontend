@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Link } from "react-router-dom"
+import { useAuth } from "@/components/authProvider";
 
 import { cn } from "@/lib/utils"
 import {
@@ -11,6 +12,8 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import { useEffect } from "react"
+import { useState } from "react";
 
 const shooting = [
   {
@@ -19,55 +22,82 @@ const shooting = [
     description: "Practice shooting and mark your scores.",
   },
   {
-    title: "Competition",
-    href: "/admin/create-competition",
-    description:
-      "Participate in archery competitions organized by your club.",
-  },
-  {
     title: "History",
     href: "/history",
     description: "Check your history of scores.",
   },
   {
-    title: "Schedule",
+    title: "Upcoming Events",
+    href: "/competition",
+    description: "Check archery events available for you.",
+  },
+  {
+    title: "Your Events",
     href: "/schedule",
-    description: "Schedule and check your archery sessions.",
+    description: "See archery events you are taking part in.",
   },
 ]
 
 const profile = [
-  {
-    title: "My Club",
-    href: "my-club",
-    description:
-      "Manage your archery club affiliation. Check information about your club and events.",
-  },
   {
     title: "Analytics",
     href: "/analytics",
     description:
       "Check your archery performance and statistics over time.",
   },
+]
+
+const profilePresident = [
   {
-    title: "Profile",
-    href: "/profile",
-    description:
-      "Edit your personal information and preferences.",
+    title: "Create Competition",
+    href: "/create-competition",
+    description: "Create and manage archery competitions for your club."
   },
   {
     title: "Pending Users",
     href: "/pending-users",
     description: "Approve or reject users requesting to join your club.",
   },
-  {
-    title: "Pending Clubs",
-    href: "/pending-clubs",
-    description: "Approve or reject clubs requesting to join your association.",
-  }
 ]
 
+const profileAdmin = [
+  {
+    title: "Pending Clubs",
+    href: "/admin/pending-clubs",
+    description: "Review clubs requesting to join Apollo Archery.",
+  },
+  {
+    title: "Invite Club",
+    href: "/admin/club-invite",
+    description: "Invite clubs to join Apollo Archery.",
+  },
+]
+
+
+
 export function NavbarMenu() {
+  const [ profileOptions, setProfileOptions ] = useState(profile);
+  const { userRole } = useAuth();
+
+  const checkPermissions = () => {
+    let options = profile;
+    if (userRole === "Club President" || userRole === "Admin") {
+      options = [...profile, ...profilePresident];
+      if (userRole === "Admin") {
+        options = [...options, ...profileAdmin];
+      }
+    }
+    setProfileOptions(options);
+  }
+
+  useEffect(() => {
+    checkPermissions();
+  }, [userRole]);
+
+  useEffect(() => {
+    console.log(profileOptions);
+  }, [profileOptions]);
+
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -98,7 +128,7 @@ export function NavbarMenu() {
           <NavigationMenuTrigger>Profile</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {profile.map((item) => (
+              {profileOptions.map((item) => (
                 <ListItem
                   key={item.title}
                   title={item.title}

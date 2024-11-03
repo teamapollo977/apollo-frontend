@@ -59,7 +59,7 @@ const router = createBrowserRouter([
         </ProtectedRoute>,
       },
       {
-        path: "/admin/create-competition",
+        path: "/create-competition",
         element: <ProtectedRoute allowedRoles={["Admin", "Club President"]}>
           <CreateCompetition />
         </ProtectedRoute>,
@@ -113,7 +113,7 @@ const router = createBrowserRouter([
         </ProtectedRoute>,
       },
       {
-        path: "/pending-clubs",
+        path: "/admin/pending-clubs",
         element: <ProtectedRoute allowedRoles={["Admin"]}>
           <PendingClubs/>
         </ProtectedRoute>,

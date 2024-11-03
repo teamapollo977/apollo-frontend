@@ -33,7 +33,7 @@ export default function PendingTable({loading, emptyMessage, title, data, approv
       <div className={`grid ${gridCols} gap-4 w-[1000px] max-w-full`}>
         <div className={`grid grid-cols-subgrid gap-4 col-span-${columns} font-bold p-4 border-b-2 border-inverted-medium`}>
           {headers.map((header) => (
-            <span>{header}</span>
+            <span key={header}>{header}</span>
           ))}
         </div>
         {!loading ? data?.map((item) => (
