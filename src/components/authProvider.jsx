@@ -86,12 +86,8 @@ const AuthProvider = ({children}) => {
       },
       body: JSON.stringify(signupCredentials),
     }).then((response) => {
-        if (response.ok) return response.json();
-      }).then((data) => {
-        saveCredentials(data);
-        toast.success("Club and account created successfully. Please login to continue.");
+        if (response.ok) toast.success("Club and account created successfully. Please login to continue.");
       }).catch((error) => {
-        handleLogout();
         toast.error("Signup failed. Please try again.");
       }).finally(() => {
         setLoading(false);
