@@ -27,7 +27,7 @@ const shooting = [
   },
   {
     title: "Upcoming Events",
-    href: "/competition",
+    href: "/upcoming-events",
     description: "Check archery events available for you.",
   },
   {

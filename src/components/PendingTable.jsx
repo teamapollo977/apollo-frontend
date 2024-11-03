@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { useAuth } from "@/components/authProvider";
-import { useEffect } from "react";
 import Cancel from "@/assets/cancel";
 import Confirm from "@/assets/confirm";
 
@@ -50,7 +47,7 @@ export default function PendingTable({loading, emptyMessage, title, data, approv
               <span
                 key={field}
                 className="text-ellipsis overflow-hidden text-nowrap"
-                >
+              >
                 {item[field]}
               </span>
             ))}

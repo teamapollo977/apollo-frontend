@@ -24,10 +24,6 @@ export const Timeline = ({data}) => {
     }
   }, [ref]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
     <div className="w-full">
       <div

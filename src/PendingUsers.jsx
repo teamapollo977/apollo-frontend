@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useAuth } from "./components/authProvider";
 import { useEffect } from "react";
-import PendingTable from "./components/PendingTable";
+import { toast } from "sonner";
+import { useAuth } from "./components/authProvider";
 
 import Cancel from "@/assets/cancel";
 import Confirm from "@/assets/confirm";
@@ -12,17 +12,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Skeleton } from "./components/ui/skeleton";
-const headers = ["Affiliation", "Name", "Actions"];
-const fields = ["affiliation_Number", "name"];
 
-const styles = {
-  colSpan: {
-    colSpan: 3
-  },
-  gridCols: {
-    gridCols: "grid-cols-[150px_1fr_85px]"
-  }
-}
+const headers = ["Affiliation", "Name", "Actions"];
 
 export default function PendingUsers() {
   const { authToken } = useAuth();
@@ -37,13 +28,11 @@ export default function PendingUsers() {
         "Authorization": `Bearer ${authToken}`,
       },
     }).then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
+      if (response.ok) return response.json();
     }).then((data) => {
       setPendingUsers(data);
     }).catch((error) => {
-      throw new Error("There was an error fetching the pending users. Please try again.");
+      toast.error("There was an error fetching the pending users. Please try again.");
     }).finally(() => {
       setLoading(false);
     });
@@ -61,13 +50,12 @@ export default function PendingUsers() {
         affiliation_Number: affiliationNumber,
       }),
     }).then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
+      if (response.ok) return response.json();
     }).then((data) => {
       setPendingUsers(data);
+      toast.success("User approved successfully");
     }).catch((error) => {
-      throw new Error("There was an error approving the user. Please try again.");
+      toast.error("There was an error approving the user. Please try again.");
     }).finally(() => {
       getPendingUsers();
     });
@@ -85,13 +73,12 @@ export default function PendingUsers() {
         affiliation_Number: affiliationNumber,
       }),
     }).then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
+      if (response.ok) return response.json();
     }).then((data) => {
       setPendingUsers(data);
+      toast.success("User rejected successfully");
     }).catch((error) => {
-      throw new Error("There was an error rejecting the user. Please try again.");
+      toast.error("There was an error rejecting the user. Please try again.");
     }).finally(() => {
       getPendingUsers();
     });
@@ -128,7 +115,7 @@ export default function PendingUsers() {
                 {item.affiliation_Number}
               </span>
               <span className="text-ellipsis overflow-hidden text-nowrap">
-                {item.name} {item.surname}
+                {`${item.firstName} ${item.lastName}`}
               </span>
             <div className="flex gap-4 items-center">
               <TooltipProvider>

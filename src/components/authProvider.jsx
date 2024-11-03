@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
+import { toast } from "sonner";
 
 const AuthContext = createContext(undefined)
 
@@ -30,7 +31,6 @@ const AuthProvider = ({children}) => {
   }
 
   const handleLogin = async (loginCredentials) => {
-    // let success = false;
     setLoading(true);
     fetch(import.meta.env.VITE_API_URL + "/api/Auth/Login", {
       method: "POST",
@@ -40,19 +40,15 @@ const AuthProvider = ({children}) => {
       },
       body: JSON.stringify(loginCredentials),
     }).then((response) => {
-        if (response.ok) {
-          // console.log("Login Success");
-          return response.json();
-        } else {
-          // console.log("Login Failed");
-          throw new Error("Failed to login");
-        }}).then((data) => {
+        if (response.ok) return response.json();
+      }).then((data) => {
         saveCredentials(data);
+        toast.success("Login successful");
       }).catch((error) => {
         handleLogout();
+        toast.error("Login failed. Please try again.");
       }).finally(() => {
         setLoading(false);
-        // return success;
       });
   }
 
@@ -67,16 +63,13 @@ const AuthProvider = ({children}) => {
       },
       body: JSON.stringify(signupCredentials),
     }).then((response) => {
-        if (response.ok) {
-          // console.log("Signup Success");
-          return response.json();
-        } else {
-          // console.log("Signup Failed");
-          throw new Error("Failed to signup");
-        }}).then((data) => {
+        if (response.ok) return response.json();
+      }).then((data) => {
         saveCredentials(data);
+        toast.success("Account created successfully");
       }).catch((error) => {
         handleLogout();
+        toast.error("Signup failed. Please try again.");
       }).finally(() => {
         setLoading(false);
       });
@@ -93,25 +86,18 @@ const AuthProvider = ({children}) => {
       },
       body: JSON.stringify(signupCredentials),
     }).then((response) => {
-        if (response.ok) {
-          // console.log("Signup Success");
-          return response.json();
-        } else {
-          // console.log("Signup Failed");
-          throw new Error("Failed to signup");
-        }}).then((data) => {
+        if (response.ok) return response.json();
+      }).then((data) => {
         saveCredentials(data);
+        toast.success("Club and account created successfully. Please login to continue.");
       }).catch((error) => {
         handleLogout();
+        toast.error("Signup failed. Please try again.");
       }).finally(() => {
         setLoading(false);
       });
   };
 
-  // useEffect(() => {
-  //   console.log('AuthToken: ' + authToken + ' UserRole: ' + userRole + ' IsLogged: ' + isLogged);
-  // }, [authToken, userRole, isLogged])
-  //
   return (
     <AuthContext.Provider
       value={{

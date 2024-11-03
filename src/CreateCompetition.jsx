@@ -1,5 +1,8 @@
 import React from "react";
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { toast } from "sonner";
+
 import { useAuth } from "./components/authProvider";
 import DefaultForm from "./components/defaultForm";
 
@@ -12,7 +15,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useState } from "react";
 
 export default function CreateCompetition() {
   const { authToken } = useAuth();
@@ -37,8 +39,10 @@ export default function CreateCompetition() {
         "Authorization": `Bearer ${authToken}`,
       },
       body: JSON.stringify(data),
+    }).then((response) => {
+      if (response.ok) toast.success("Event created successfully");
     }).catch((error) => {
-      throw new Error("There was an error creating the event. Please try again.");
+      toast.error("There was an error creating the event. Please try again.");
     });
     setLoading(false);
   };

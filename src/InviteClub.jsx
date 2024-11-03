@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "./components/authProvider";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function InviteClub() {
   const { authToken } = useAuth();
@@ -30,8 +31,10 @@ export default function InviteClub() {
         "Authorization": `Bearer ${authToken}`,
       },
       body: JSON.stringify(data),
+    }).then((response) => {
+      if (response.ok) toast.success("OTP sent successfully");
     }).catch((error) => {
-      throw new Error("There was an error approving the user. Please try again.");
+      toast.error("There was an error sending the OTP. Please try again.");
     }).finally(() => {
       setLoading(false);
     });

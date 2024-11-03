@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "./components/authProvider";
 import { useEffect } from "react";
-import PendingTable from "./components/PendingTable";
+import { toast } from "sonner";
 
 import Cancel from "@/assets/cancel";
 import Confirm from "@/assets/confirm";
@@ -16,15 +16,6 @@ import { Skeleton } from "./components/ui/skeleton";
 const headers = ["Name", "City", "District", "Actions"];
 const fields = ["club_Name", "club_Location", "district"];
 
-const styles = {
-  colSpan: {
-    colSpan: 4
-  },
-  gridCols: {
-    gridCols: "grid-cols-[2fr_1fr_1fr_85px]"
-  }
-}
-
 export default function PendingClubs() {
   const { authToken } = useAuth();
   const [loading, setLoading] = useState(true);
@@ -38,13 +29,11 @@ export default function PendingClubs() {
         "Authorization": `Bearer ${authToken}`,
       },
     }).then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
+      if (response.ok) return response.json();
     }).then((data) => {
       setPendingClubs(data);
     }).catch((error) => {
-      throw new Error("There was an error fetching the pending clubs. Please try again.");
+      toast.error("There was an error fetching the pending clubs. Please try again.");
     }).finally(() => {
       setLoading(false);
     });
@@ -52,7 +41,7 @@ export default function PendingClubs() {
 
   const approveClub = async (clubID) => {
     console.log("Approving club with ID: ", clubID);
-    setLoadingClubs(true);
+    setLoading(true);
     await fetch(import.meta.env.VITE_API_URL + "/api/Auth/ApproveRegistration", {
       method: "POST",
       headers: {
@@ -62,8 +51,10 @@ export default function PendingClubs() {
       body: JSON.stringify({
         clubID: clubID,
       }),
+    }).then((response) => {
+      if (response.ok) toast.success("Club approved successfully");
     }).catch((error) => {
-      throw new Error("There was an error approving the club. Please try again.");
+      toast.error("There was an error approving the club. Please try again.");
     }).finally(() => {
       getPendingClubs();
     });
@@ -71,7 +62,7 @@ export default function PendingClubs() {
 
   const rejectClub = async (clubID) => {
     console.log("Rejecting club with ID: ", clubID);
-    setLoadingClubs(true);
+    setLoading(true);
     await fetch(import.meta.env.VITE_API_URL + "/api/Auth/RejectRegistration", {
       method: "POST",
       headers: {
@@ -81,8 +72,10 @@ export default function PendingClubs() {
       body: JSON.stringify({
         clubID: clubID,
       }),
+    }).then((response) => {
+      if (response.ok) toast.success("Club rejected successfully");
     }).catch((error) => {
-      throw new Error("There was an error rejecting the club. Please try again.");
+      toast.error("There was an error rejecting the club. Please try again.");
     }).finally(() => {
       getPendingClubs();
     });
@@ -119,14 +112,14 @@ export default function PendingClubs() {
               <span
                 key={field}
                 className="text-ellipsis overflow-hidden text-nowrap"
-                >
+              >
                 {item[field]}
               </span>
             ))}
             <div className="flex gap-4 items-center">
               <TooltipProvider>
                 <Tooltip>
-                  <TooltipTrigger onClick={() => approve(item[clubId])}>
+                  <TooltipTrigger onClick={() => approveClub(item.clubId)}>
                     <Confirm/>
                   </TooltipTrigger>
                   <TooltipContent>Approve</TooltipContent>
@@ -134,7 +127,7 @@ export default function PendingClubs() {
               </TooltipProvider>
               <TooltipProvider>
                 <Tooltip>
-                  <TooltipTrigger onClick={() => reject(item[clubId])}>
+                  <TooltipTrigger onClick={() => rejectClub(item.clubId)}>
                     <Cancel/>
                   </TooltipTrigger>
                   <TooltipContent>Reject</TooltipContent>
